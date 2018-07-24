@@ -11,5 +11,5 @@ to fill in with scripts being used
 #### MRIP data organization and summaries
 to fill in with scripts being used
 ### Data
-this is on PYDIO, maybe can't be public access??
+the raw data is on pydio and cannot be asked without SESYNC user login
 
