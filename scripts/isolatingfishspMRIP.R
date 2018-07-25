@@ -1,5 +1,5 @@
 #=================================================================
-# Cleaning MRIP data 
+# Cleaning MRIP data ==for fish species!
 # For catch, takes the dozens of raw data sheets and aggregates 
 # extracts for specific variables for all years and survey waves
 # For survey, takes the 4 of raw data sheets and aggregates them
@@ -63,7 +63,7 @@ wave <- seq(1,6,by=1)
 
 
 # first loop just to get things started
-csv <- paste0("data/MRIP/MRIP_catch_dispo/catch_dispo_",years[1],wave[1],".csv",sep="")
+csv <- paste0("PydioData/MRIP/raw/MRIP_catch_dispo/catch_dispo_",years[1],wave[1],".csv",sep="")
 new <- read.csv(csv,header=TRUE)
 new <- new[which( new$MODE_FX < 4 ),]
 
@@ -73,7 +73,7 @@ fullBind <- new[nameVec]
 # loops through first wave
 for(w in 2:6) {
   # loops through second wave to set things up 
-  csv <- paste0("data/MRIP/MRIP_catch_dispo/catch_dispo_",years[1],wave[w],".csv",sep="")
+  csv <- paste0("PydioData/MRIP/raw/MRIP_catch_dispo/catch_dispo_",years[1],wave[w],".csv",sep="")
   
   new <- read.csv(csv,header=TRUE)
   new <- new[which( new$MODE_FX < 4 ),] #subset only relevant fishing modes
@@ -86,7 +86,7 @@ for(w in 2:6) {
 for(y in 2:length(years)) {
   for(w in 1:length(wave)) {
     # loops through each year after the first year and all of each wave
-    csv <- paste0("data/MRIP/MRIP_catch_dispo/catch_dispo_",years[y],wave[w],".csv",sep="")
+    csv <- paste0("PydioData/MRIP/raw/MRIP_catch_dispo/catch_dispo_",years[y],wave[w],".csv",sep="")
     
     new <- read.csv(csv,header=TRUE)
     new <- new[which( new$MODE_FX < 4 ),] #subset only relevant fishing modes
@@ -95,8 +95,9 @@ for(y in 2:length(years)) {
     fullBind <- rbind(fullBind,new) #bind new information to all other information
   }
 }
+str(fullBind)
 
-write.csv(fullBind,"outputs/new_data/aggregatedMRIP/mripCatch_2004_2017.csv",row.names=FALSE)
+write.csv(fullBind,"PydioData/MRIP/data_outputs/clean_MRIP/mripspecies_2004_2017.csv",row.names=FALSE)
 
 #____________________________________________________
 # bringing together the MRIP trip survey data
