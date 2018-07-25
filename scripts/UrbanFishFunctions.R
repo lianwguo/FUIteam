@@ -232,10 +232,13 @@ zipSitesLanding <- function(yearVec, harvestType,howMany,state, datCatch, datTri
 }
 
 
+
+
+
 #============================================================
 # Function to plot subsistence engagement by zips
 #============================================================
-
+#we probabl
 zipPlot <- function(yearsSeq,Mat,state, harvestType) {
 	yearsSeq <- 1
 	Mat <- MetroZipLandingYearState

@@ -79,11 +79,11 @@ write.csv(fullBind,"PydioData/MRIP/mripCatch_2004_2017.csv",row.names=FALSE)
 # bringing together the MRIP trip survey data
 
 # Florida all in one file
-FL_trip_2004_2015 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/mrip_survey_trip_2004_2015.csv") # all of florida
+FL_trip_2004_2015 <- read.csv("PydioData/MRIP/MRIP_trip_ZIP/original/mrip_survey_trip_2004_2015.csv") # all of florida
 # Louisiana was broken up
-LA_trip_2004 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/LA_trip_2004_2004_zipcode.csv")
-LA_trip_2005_2010 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/LA_mrip_survey_trip_zipcode_2005_2010.csv") #this one seems wrong
-LA_trip_2010_2015 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/mrip_survey_trip_2010_2015.csv") # part of Louisiana
+LA_trip_2004 <- read.csv("PydioData/MRIP/MRIP_trip_ZIP/original/LA_trip_2004_2004_zipcode.csv")
+LA_trip_2005_2010 <- read.csv("PydioData/MRIP/MRIP_trip_ZIP/original/LA_mrip_survey_trip_zipcode_2005_2010.csv") #this one seems wrong
+LA_trip_2010_2015 <- read.csv("PydioData/MRIP/MRIP_trip_ZIP/original/mrip_survey_trip_2010_2015.csv") # part of Louisiana
 # overlap in 2005-2010 and 2010 to 2015 data, so remove 2010 from the 2005 - 2010 dataset
 LA_trip_2005_2009 <- subset(LA_trip_2005_2010,LA_trip_2005_2010$YEAR!=2010)
 
@@ -105,7 +105,7 @@ trip_all <- rbind(
 	)
 
 # will need to amend this, as the raw trip
-write.csv(trip_all,"data/aggregatedMRIP/mripTrip_2004_2017.csv",row.names=FALSE)
+write.csv(trip_all,"PydioData/MRIP/mripTrip_2004_2017.csv",row.names=FALSE)
 
 
 
