@@ -40,7 +40,7 @@ wave <- seq(1,6,by=1)
 
 
 # first loop just to get things started
-csv <- paste0("data/MRIP/MRIP_catch_dispo/catch_dispo_",years[1],wave[1],".csv",sep="")
+csv <- paste0("PydioData/MRIP/MRIP_catch_dispo/catch_dispo_",years[1],wave[1],".csv",sep="")
 new <- read.csv(csv,header=TRUE)
 new <- new[which( new$MODE_FX < 4 ),]
 
@@ -50,7 +50,7 @@ fullBind <- new[nameVec]
 # loops through first wave
 for(w in 2:6) {
 	# loops through second wave to set things up 
-	csv <- paste0("data/MRIP/MRIP_catch_dispo/catch_dispo_",years[1],wave[w],".csv",sep="")
+	csv <- paste0("PydioData/MRIP/MRIP_catch_dispo/catch_dispo_",years[1],wave[w],".csv",sep="")
 	
 	new <- read.csv(csv,header=TRUE)
 	new <- new[which( new$MODE_FX < 4 ),] #subset only relevant fishing modes
@@ -63,7 +63,7 @@ for(w in 2:6) {
  for(y in 2:length(years)) {
  	for(w in 1:length(wave)) {
 		# loops through each year after the first year and all of each wave
-		csv <- paste0("data/MRIP/MRIP_catch_dispo/catch_dispo_",years[y],wave[w],".csv",sep="")
+		csv <- paste0("PydioData/MRIP/MRIP_catch_dispo/catch_dispo_",years[y],wave[w],".csv",sep="")
 		
 		new <- read.csv(csv,header=TRUE)
 		new <- new[which( new$MODE_FX < 4 ),] #subset only relevant fishing modes
@@ -73,17 +73,17 @@ for(w in 2:6) {
  	}
  }
 
-write.csv(fullBind,"outputs/new_data/aggregatedMRIP/mripCatch_2004_2017.csv",row.names=FALSE)
+write.csv(fullBind,"PydioData/MRIP/mripCatch_2004_2017.csv",row.names=FALSE)
 
 #____________________________________________________
 # bringing together the MRIP trip survey data
 
 # Florida all in one file
-FL_trip_2004_2015 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/mrip_survey_trip_2004_2015.csv") # all of florida
+FL_trip_2004_2015 <- read.csv("PydioData/MRIP/MRIP_trip_ZIP/original/mrip_survey_trip_2004_2015.csv") # all of florida
 # Louisiana was broken up
-LA_trip_2004 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/LA_trip_2004_2004_zipcode.csv")
-LA_trip_2005_2010 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/LA_mrip_survey_trip_zipcode_2005_2010.csv") #this one seems wrong
-LA_trip_2010_2015 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/mrip_survey_trip_2010_2015.csv") # part of Louisiana
+LA_trip_2004 <- read.csv("PydioData/MRIP/MRIP_trip_ZIP/original/LA_trip_2004_2004_zipcode.csv")
+LA_trip_2005_2010 <- read.csv("PydioData/MRIP/MRIP_trip_ZIP/original/LA_mrip_survey_trip_zipcode_2005_2010.csv") #this one seems wrong
+LA_trip_2010_2015 <- read.csv("PydioData/MRIP/MRIP_trip_ZIP/original/mrip_survey_trip_2010_2015.csv") # part of Louisiana
 # overlap in 2005-2010 and 2010 to 2015 data, so remove 2010 from the 2005 - 2010 dataset
 LA_trip_2005_2009 <- subset(LA_trip_2005_2010,LA_trip_2005_2010$YEAR!=2010)
 
@@ -105,7 +105,7 @@ trip_all <- rbind(
 	)
 
 # will need to amend this, as the raw trip
-write.csv(trip_all,"data/aggregatedMRIP/mripTrip_2004_2017.csv",row.names=FALSE)
+write.csv(trip_all,"PydioData/MRIP/mripTrip_2004_2017.csv",row.names=FALSE)
 
 
 
