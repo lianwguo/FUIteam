@@ -109,3 +109,111 @@ write.csv(trip_all,"data/aggregatedMRIP/mripTrip_2004_2017.csv",row.names=FALSE)
 
 
 
+####creating a new file to isolate fish species by area --MNM
+# variables that will be extracted to save computation time 
+#for top ten fish species captured per site 
+variablesToIndexextended <- c("NAME",
+                              "AREA_X",
+                              "CLAIM",
+                              "COMMON",
+                              "HARV_D3",
+                              "HARV_D4",
+                              "HARV_D5",
+                              "HARV_D6",
+                              "HARV_D7",
+                              "HARVEST",
+                              "HARVEST_UNADJ",
+                              "ID_CODE",
+                              "LANDING",
+                              "REGION",
+                              "REL_D1",
+                              "REL_D2",
+                              "RELEASE",
+                              "RELEASE_UNADJ",
+                              "SP_CODE",
+                              "TOT_CAT",
+                              "TOT_LEN",
+                              "TOT_LEN_A",
+                              "TOT_LEN_B1",
+                              "WGT_A",
+                              "WGT_AB1",
+                              "WGT_B1",
+                              "WP_CATCH",
+                              "WP_INT",
+                              "YEAR",
+                              "ST",
+                              "YEAR",
+                              "WAVE",
+                              "MODE_FX")
+
+years <- seq(2004,2017,by=1)
+wave <- seq(1,6,by=1)
+
+# first loop just to get things started
+csvfish <- paste0("PydioData/MRIP/raw/MRIP_catch_dispo/catch_dispo_", years[1],wave[1], ".csv",sep="")
+newfish <- read.csv(csvfish,header=TRUE)
+newfish <- newfish[which( newfish$MODE_FX < 4 ),]
+
+nameVecfish <- names(newfish) %in% variablesToIndexextended
+fullBindfish <- newfish[nameVecfish]
+
+# loops through first wave
+for(w in 2:6) {
+  # loops through second wave to set things up 
+ csvfish <- paste0("PydioData/MRIP/raw/MRIP_catch_dispo/catch_dispo_",years[1],wave[w],".csv",sep="")
+  
+  newfish <- read.csv(fishcsv,header=TRUE)
+  newfish <- newfish[which( newfish$MODE_FX < 4 ),] #subset only relevant fishing modes
+  nameVecfish <- names(newfish) %in% variablesToIndexextended #extract names
+  newfish <- newfish[nameVecfish] #subset only variables specified above
+  fullBindfish <- rbind(fullBindfish,newfish) #bind new information to all other information
+}
+
+# second nested loop runs through each subsequent year and wave
+for(y in 2:length(years)) {
+  for(w in 1:length(wave)) {
+    # loops through each year after the first year and all of each wave
+    csvfish <- paste0("PydioData/MRIP/raw/MRIP_catch_dispo/catch_dispo_",years[y],wave[w],".csv",sep="")
+    
+    newfish <- read.csv(csv,header=TRUE)
+    newfish <- new[which( new$MODE_FX < 4 ),] #subset only relevant fishing modes
+    nameVecfish <- names(newfish) %in% variablesToIndexextended #extract names
+    newfish <- newfish[nameVecfish] #subset only variables specified above
+    fullBindfish <- rbind(fullBindfish,newfish) #bind new information to all other information
+  }
+}
+
+write.csv(fullBindfish,"PydioData/data_outputs/aggregatedMRIP/mripCatch_2004_2017.csv",row.names=FALSE)
+
+#____________________________________________________
+# bringing together the MRIP trip survey data
+
+# Florida all in one file
+FL_trip_2004_2015 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/mrip_survey_trip_2004_2015.csv") # all of florida
+# Louisiana was broken up
+LA_trip_2004 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/LA_trip_2004_2004_zipcode.csv")
+LA_trip_2005_2010 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/LA_mrip_survey_trip_zipcode_2005_2010.csv") #this one seems wrong
+LA_trip_2010_2015 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/mrip_survey_trip_2010_2015.csv") # part of Louisiana
+# overlap in 2005-2010 and 2010 to 2015 data, so remove 2010 from the 2005 - 2010 dataset
+LA_trip_2005_2009 <- subset(LA_trip_2005_2010,LA_trip_2005_2010$YEAR!=2010)
+
+# sight check to make sure each row has the same name and can be easily bound
+cbind(names(FL_trip_2004_2015),
+      names(LA_trip_2004),
+      names(LA_trip_2005_2009),
+      names(LA_trip_2010_2015)
+)
+
+
+
+# bind by all rows
+trip_all <- rbind(
+  FL_trip_2004_2015,
+  LA_trip_2004,
+  LA_trip_2005_2009,
+  LA_trip_2010_2015
+)
+
+# will need to amend this, as the raw trip
+write.csv(trip_all,"data/aggregatedMRIP/mripTrip_2004_2017.csv",row.names=FALSE)
+
