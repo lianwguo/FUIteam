@@ -34,11 +34,13 @@ str(LAsiteReg)
 #left join to add lat long to top landing sites for florida (keeps all of x, adds other columns of y)
 FLmripAfinal <- merge(x = FLmripA, y = FLsiteReg, by.x = "SiteNum", by.y = "SiteNum", all.x = TRUE)
 FLmripBfinal <- merge(x = FLmripB, y = FLsiteReg, by.x = "SiteNum", by.y = "SiteNum", all.x = TRUE)
+
 write.csv(FLmripAfinal, "~/FUIteam/PydioData/env/data_outputs/FLmripA.csv") #write landing sites through years with latlongs
 write.csv(FLmripBfinal, "~/FUIteam/PydioData/env/data_outputs/FLmripB.csv") 
 
 #left join to add lat long to top landing sites for louisiana (keeps all of x, adds other columns of y)
 LAmripAfinal <- merge(x = LAmripA, y = LAsiteReg, by.x = "SiteNum", by.y = "SiteNum", all.x = TRUE)
 LAmripBfinal <- merge(x = LAmripB, y = LAsiteReg, by.x = "SiteNum", by.y = "SiteNum", all.x = TRUE)
+
 write.csv(LAmripAfinal, "~/FUIteam/PydioData/env/data_outputs/LAmripA.csv") #write landing sites through years with latlongs
 write.csv(LAmripBfinal, "~/FUIteam/PydioData/env/data_outputs/LAmripB.csv")
