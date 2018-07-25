@@ -99,35 +99,8 @@ str(fullBind)
 
 write.csv(fullBind,"PydioData/MRIP/data_outputs/clean_MRIP/mripspecies_2004_2017.csv",row.names=FALSE)
 
-#____________________________________________________
-# bringing together the MRIP trip survey data
 
-# Florida all in one file
-FL_trip_2004_2015 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/mrip_survey_trip_2004_2015.csv") # all of florida
-# Louisiana was broken up
-LA_trip_2004 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/LA_trip_2004_2004_zipcode.csv")
-LA_trip_2005_2010 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/LA_mrip_survey_trip_zipcode_2005_2010.csv") #this one seems wrong
-LA_trip_2010_2015 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/mrip_survey_trip_2010_2015.csv") # part of Louisiana
-# overlap in 2005-2010 and 2010 to 2015 data, so remove 2010 from the 2005 - 2010 dataset
-LA_trip_2005_2009 <- subset(LA_trip_2005_2010,LA_trip_2005_2010$YEAR!=2010)
+# we need to site, zipcode, landing by species, weight of species, length of species, etc
+# basically each line of code will be a site zip species combination
 
-# sight check to make sure each row has the same name and can be easily bound
-cbind(names(FL_trip_2004_2015),
-      names(LA_trip_2004),
-      names(LA_trip_2005_2009),
-      names(LA_trip_2010_2015)
-)
-
-
-
-# bind by all rows
-trip_all <- rbind(
-  FL_trip_2004_2015,
-  LA_trip_2004,
-  LA_trip_2005_2009,
-  LA_trip_2010_2015
-)
-
-# will need to amend this, as the raw trip
-write.csv(trip_all,"data/aggregatedMRIP/mripTrip_2004_2017.csv",row.names=FALSE)
-
+# link expanded catch database to trip database by ID_CODE should do it. 
