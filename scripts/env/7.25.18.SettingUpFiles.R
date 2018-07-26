@@ -44,3 +44,44 @@ LAmripBfinal <- merge(x = LAmripB, y = LAsiteReg, by.x = "SiteNum", by.y = "Site
 
 write.csv(LAmripAfinal, "~/FUIteam/PydioData/env/data_outputs/LAmripA.csv") #write landing sites through years with latlongs
 write.csv(LAmripBfinal, "~/FUIteam/PydioData/env/data_outputs/LAmripB.csv")
+
+#case study sites for AFS will be 
+#29.15833333, -90.17831667 site 222
+#30.03153333, -90.03693333 site 306
+
+#read in mercury sites for 2010. there is a data gap in mercury testing until 2016.
+LAmerc2010 <- read.csv(file.path("~/FUIteam/PydioData/env/raw/", "LAmerc2010.csv"), 
+                      stringsAsFactors = FALSE)
+head(LAmerc2010)
+unique(LAmerc2010$Water.Body.Site)
+
+#read in mercury site register from Al Hendrichs, includes lat/long
+LAmercSites <- read.csv(file.path("~/FUIteam/PydioData/env/raw/", "NOLAmercSites.csv"), 
+                       stringsAsFactors = FALSE)
+head(LAmercSites)
+
+#add lat/long from site register to the mercury data
+LAmerc2010sp <- merge(x = LAmerc2010, y = LAmercSites, by.x = "Water.Body.Site", by.y = "SITE_Num", all.x = TRUE)
+head(LAmerc2010sp)
+str(LAmerc2010sp)
+LAmerc2010sp[,14:20] <- NULL
+write.csv(LAmerc2010sp, "~/FUIteam/PydioData/env/data_outputs/LAmerc2010sp.csv")
+
+#read in wq sites for 2010. 
+LAwq2010 <- read.csv(file.path("~/FUIteam/PydioData/env/raw/", "LAwq2010.csv"), 
+                       stringsAsFactors = FALSE)
+head(LAwq2010)
+
+#read in water quality site register, includes lat/long
+LAwqSites <- read.csv(file.path("~/FUIteam/PydioData/env/raw/", "LAwqSiteReg.csv"), 
+                        stringsAsFactors = FALSE)
+head(LAwqSites)
+str(LAwqSites)
+LAwqSites[,6:11] <- NULL
+
+#add lat/long from site register to the wq data
+LAwq2010sp <- merge(x = LAwq2010, y = LAwqSites, by.x = "Site.", by.y = "SITE_ID", all.x = TRUE)
+head(LAwq2010sp)
+str(LAwq2010sp)
+write.csv(LAwq2010sp, "~/FUIteam/PydioData/env/data_outputs/LAwq2010sp.csv")
+
