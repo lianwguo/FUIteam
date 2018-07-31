@@ -15,26 +15,21 @@ options(stringsAsFactors=FALSE) #so this doesn't have to be repeated anytime a n
 fishdata<-read.csv("PydioData/MRIP/data_outputs/clean_MRIP/mrip_species_zip_site_2004_2017.csv")
 str(fishdata)
 str(fishdata$INTSITE)
+#add a column for landing, which is harvest + claim
+fishdata$LANDING<-(fishdata$HARVEST + fishdata$CLAIM)
 
-#For the afs presentation, we are focusing on sites 222 and 306 in NoLA, so I will create a subset 
-#Site 222
-#First isolate the data for site 222
-fish222<-subset(fishdata, INTSITE == 222)
-summary(fish222$INTSITE) #check (should all be 222)
-#subset by state
-#state is the variable ST. FIPS code 22 = LA, 12 =FL
-fish222<-subset(fish222, ST == 22)
-summary(fish222$ST) #check (should all be 22)
+#use aggregate to sum the landing, harvest and claim data by SP_CODE
+#separately for each year and fishing site 
+L<-aggregate(LANDING ~SP_CODE + YEAR + INTSITE, data = fishdata, sum)
+H<-aggregate(HARVEST~SP_CODE + YEAR + INTSITE, data = fishdata, sum)
+C<-aggregate(CLAIM~SP_CODE + YEAR + INTSITE, data = fishdata, sum)
 
-#to consider one year, subset by year
-fish222_2010<-subset(fish222,YEAR == 2010)
-summary(fish222_2010$YEAR)
+species<-rbind(L, H, C)
+#merge these files together
 
-#For 2010:
-table(fish222_2010$SP_CODE, fish222_2010$HARVEST)
-table(fish222_2010$SP_CODE, fish222_2010$CLAIM)
-#adding a column for landing, which is harvest + claim
-fish222_2010$LANDING<-(fish222_2010$HARVEST + fish222_2010$CLAIM)
+#For the afs presentation, we are focusing on sites 222 and 306 in NoLA, 
+L222<-subset(L, INTSITE == 222)
+L222_2010<-subset(L222, YEAR==2010)
 
-##
-table(fish222_2010$SP_CODE, fish222_2010$LANDING)
+summary(L222$YEAR)
+
