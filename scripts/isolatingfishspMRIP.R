@@ -97,37 +97,30 @@ for(y in 2:length(years)) {
 }
 str(fullBind)
 
-write.csv(fullBind,"PydioData/MRIP/data_outputs/clean_MRIP/mripspecies_2004_2017.csv",row.names=FALSE)
-
-#____________________________________________________
-# bringing together the MRIP trip survey data
-
-# Florida all in one file
-FL_trip_2004_2015 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/mrip_survey_trip_2004_2015.csv") # all of florida
-# Louisiana was broken up
-LA_trip_2004 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/LA_trip_2004_2004_zipcode.csv")
-LA_trip_2005_2010 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/LA_mrip_survey_trip_zipcode_2005_2010.csv") #this one seems wrong
-LA_trip_2010_2015 <- read.csv("data/MRIP/MRIP_trip_ZIP/original/mrip_survey_trip_2010_2015.csv") # part of Louisiana
-# overlap in 2005-2010 and 2010 to 2015 data, so remove 2010 from the 2005 - 2010 dataset
-LA_trip_2005_2009 <- subset(LA_trip_2005_2010,LA_trip_2005_2010$YEAR!=2010)
-
-# sight check to make sure each row has the same name and can be easily bound
-cbind(names(FL_trip_2004_2015),
-      names(LA_trip_2004),
-      names(LA_trip_2005_2009),
-      names(LA_trip_2010_2015)
-)
+write.csv(fullBind,"PydioData/MRIP/data_outputs/clean_MRIP/mripCatch_species_2004_2017.csv",row.names=FALSE)
 
 
+# we need to site, zipcode, landing by species, weight of species, length of species, etc
+# basically each line of code will be a site zip species combination
 
-# bind by all rows
-trip_all <- rbind(
-  FL_trip_2004_2015,
-  LA_trip_2004,
-  LA_trip_2005_2009,
-  LA_trip_2010_2015
-)
+# link expanded catch database to trip database by ID_CODE should do it.
 
-# will need to amend this, as the raw trip
-write.csv(trip_all,"data/aggregatedMRIP/mripTrip_2004_2017.csv",row.names=FALSE)
+datCatch <- read.csv("PydioData/MRIP/data_outputs/clean_MRIP/mripCatch_species_2004_2017.csv",header=TRUE) #test
+datTrip <- read.csv("PydioData/MRIP/data_outputs/clean_MRIP/mripTrip_2004_2017.csv",header=TRUE) #test
+metrozips <- read.csv("PydioData/MRIP/data_outputs/clean_MRIP/metropolitan_ZCTA.csv",header = TRUE) # ZCTAs metro areas from Sarita
 
+datCatch$ID_CODE <- as.character(datCatch$ID_CODE) #convert to character so it merges long strings of numbers with no issues
+
+
+#clean MRIP Trip file so merge doesn't have duplicates
+intersect(names(datTrip),names(datCatch)) #drop all these *except* ID_CODE used for merge
+dropDups <- c("YEAR","ST","MODE_FX","AREA_X","WAVE") #identified using intersect
+datTrip <- datTrip[ , !(names(datTrip) %in% dropDups)] #drops duplicates using above objects
+
+names(datTrip)
+
+# merge together data onto new species-specific dataset 
+dat_all <- merge(datCatch,datTrip,by="ID_CODE", all.x = TRUE) #this merges trip to catch and ensures that all catch remains even if there is no match on trip
+
+
+write.csv(dat_all,"PydioData/MRIP/data_outputs/clean_MRIP/mrip_species_zip_site_2004_2017.csv",row.names=FALSE)
