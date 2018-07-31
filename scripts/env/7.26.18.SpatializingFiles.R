@@ -20,6 +20,9 @@ library(spdep)
 library(rgdal)  # for vector work; sp package should always load with rgdal.
 library (raster)   # for metadata/attributes- vectors or rasters
 library(maptools)
+library(ggplot2)
+library(grid)
+library(maps)
 
 #read in map shapefiles for state boundaries (US_State_Bound) and metropolitan statistical areas (Stat_Area)
 US_State_Bound <- readOGR(file.path("~/FUIteam/PydioData/env/raw/cb_2017_us_state_500k"), "cb_2017_us_state_500k") ##readOGR(directory,shapefilename)
@@ -92,3 +95,14 @@ plot(re_LAsite306,
      cex = 2,
      col = "red",
      add = TRUE)
+
+ggplot(NOLA,
+       col = "yellow",
+       main = "2010 Merc and WQ sites") + 
+  scalebar(lon = -89.05, 
+           lat = 29.0, 
+           distanceLon = 200, 
+           distanceLat = 100, 
+           distanceLegend = 100, 
+           dist.unit = "km", 
+           orientation = FALSE)

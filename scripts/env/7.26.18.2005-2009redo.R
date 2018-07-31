@@ -18,10 +18,14 @@ sp_LAmercA <- SpatialPointsDataFrame(LAmercAsp[,15:16], LAmercAsp) #long/lat are
 crs(sp_LAmercA) <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 re_LAmercA <- spTransform(sp_LAmercA, CRS("+proj=longlat +ellps=GRS80 +datum=NAD83 +no_defs"))
 
+#import wq as xls, convert to csv
+convert("~/FUIteam/PydioData/env/raw/LAwq05to09.xls", "~/FUIteam/PydioData/env/raw/LAwq05to09.csv")
+import("LAwq05to09.xls")
+
 #plot - based on files spatialized in 7.26.18 file
 plot(NOLA,
      col = "yellow",
-     main = "2010 Merc and WQ sites")
+     main = "2005-2009 Merc and WQ sites")
 plot(US_State_Bound,
      add = TRUE)
 plot(re_LAmercA,
