@@ -79,6 +79,8 @@ loc_LAwq2010 <- spTransform(sp_LAwq2010, CRS("+proj=lcc +lat_1=30.7 +lat_2=29.3 
 loc_LAsite222 <- spTransform(sp_LAsite222, CRS("+proj=lcc +lat_1=30.7 +lat_2=29.3 +lat_0=28.5 +lon_0=-91.33333333333333 +x_0=1000000 +y_0=0 +ellps=GRS80 +units=m +no_defs"))
 loc_LAsite306 <- spTransform(sp_LAsite306, CRS("+proj=lcc +lat_1=30.7 +lat_2=29.3 +lat_0=28.5 +lon_0=-91.33333333333333 +x_0=1000000 +y_0=0 +ellps=GRS80 +units=m +no_defs"))
 loc_NOLA <- spTransform(NOLA, CRS("+proj=lcc +lat_1=30.7 +lat_2=29.3 +lat_0=28.5 +lon_0=-91.33333333333333 +x_0=1000000 +y_0=0 +ellps=GRS80 +units=m +no_defs"))
+loc_StateBound <- spTransform(US_State_Bound, CRS("+proj=lcc +lat_1=30.7 +lat_2=29.3 +lat_0=28.5 +lon_0=-91.33333333333333 +x_0=1000000 +y_0=0 +ellps=GRS80 +units=m +no_defs"))
+
 
 plot(NOLA,
      col = "yellow",
