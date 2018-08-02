@@ -37,6 +37,7 @@ crs(Stat_Area) # +proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0
 NOLA <- subset(Stat_Area, Stat_Area$GEOID == 35380) #New orleans-metairie area are 35380, based on google search
 plot(NOLA,
      col = "yellow")
+crs(NOLA)
 
 #readin dataframes for two case study sites for NOLA, sites 222 and 306
 LAsite222 <- read.csv(file.path("~/FUIteam/PydioData/env/raw/", "LAsite222.csv"), 
@@ -71,6 +72,13 @@ crs(re_LAmerc2010)
 crs(re_LAwq2010)
 crs(re_LAsite222)
 crs(re_LAsite306)
+
+#transform from WGS84 to local projection
+loc_LAmerc2010 <- spTransform(sp_LAmerc2010, CRS("+proj=lcc +lat_1=30.7 +lat_2=29.3 +lat_0=28.5 +lon_0=-91.33333333333333 +x_0=1000000 +y_0=0 +ellps=GRS80 +units=m +no_defs"))
+loc_LAwq2010 <- spTransform(sp_LAwq2010, CRS("+proj=lcc +lat_1=30.7 +lat_2=29.3 +lat_0=28.5 +lon_0=-91.33333333333333 +x_0=1000000 +y_0=0 +ellps=GRS80 +units=m +no_defs"))
+loc_LAsite222 <- spTransform(sp_LAsite222, CRS("+proj=lcc +lat_1=30.7 +lat_2=29.3 +lat_0=28.5 +lon_0=-91.33333333333333 +x_0=1000000 +y_0=0 +ellps=GRS80 +units=m +no_defs"))
+loc_LAsite306 <- spTransform(sp_LAsite306, CRS("+proj=lcc +lat_1=30.7 +lat_2=29.3 +lat_0=28.5 +lon_0=-91.33333333333333 +x_0=1000000 +y_0=0 +ellps=GRS80 +units=m +no_defs"))
+loc_NOLA <- spTransform(NOLA, CRS("+proj=lcc +lat_1=30.7 +lat_2=29.3 +lat_0=28.5 +lon_0=-91.33333333333333 +x_0=1000000 +y_0=0 +ellps=GRS80 +units=m +no_defs"))
 
 plot(NOLA,
      col = "yellow",

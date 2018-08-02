@@ -17,10 +17,12 @@ unique(LAmercAsp$LONG)
 sp_LAmercA <- SpatialPointsDataFrame(LAmercAsp[,15:16], LAmercAsp) #long/lat are in columns 14 and 15
 crs(sp_LAmercA) <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 re_LAmercA <- spTransform(sp_LAmercA, CRS("+proj=longlat +ellps=GRS80 +datum=NAD83 +no_defs"))
+loc_LAmercA <- spTransform(sp_LAmercA, CRS("+proj=lcc +lat_1=30.7 +lat_2=29.3 +lat_0=28.5 +lon_0=-91.33333333333333 +x_0=1000000 +y_0=0 +ellps=GRS80 +units=m +no_defs"))
 
 #import wq as xls, convert to csv
-convert("~/FUIteam/PydioData/env/raw/LAwq05to09.xls", "~/FUIteam/PydioData/env/raw/LAwq05to09.csv")
-import("LAwq05to09.xls")
+LAwqA <- read.csv(file.path("~/FUIteam/PydioData/env/raw/", "LAwq05to09.csv"), 
+                    stringsAsFactors = FALSE)
+head(LAwqA)
 
 #plot - based on files spatialized in 7.26.18 file
 plot(NOLA,
@@ -41,3 +43,4 @@ plot(re_LAsite306,
      cex = 2,
      col = "red",
      add = TRUE)
+
