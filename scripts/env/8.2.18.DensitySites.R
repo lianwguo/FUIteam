@@ -5,31 +5,38 @@
 #loc_NOLA (msa)
 
 #using sp package
-merc222dist <- spDistsN1(loc_LAmercA, loc_LAsite222, longlat = FALSE) #in ft
+#distances based on original projection, site 222
+crs(loc_LAmercA)
+merc222dist <- spDistsN1(loc_LAmercA, loc_LAsite222, longlat = FALSE) #in m
 merc222dist
+
 unique(merc222dist)
-which(merc222dist < 26400) #returns 0
-which(merc222dist < 52800) #returns a decent number
-Index10mi <- which(merc222dist < 52800)
-#subset sites of interest within 10 miles
-subset10miHg <- loc_LAmercA[Index10mi,]
-subset10miHg
+which(merc222dist < 8046.72) #within 5 miles #returns 0, 
+which(merc222dist < 16093.4) #within 10 miles #returns 0
+which(merc222dist < 40233.6) #within 25 miles #returns 3 sites, 44 observations
+which(merc222dist < 80467.2) #within 50 miles #returns 36 sites, 493 observations
 
-#try 25 miles
-Index25mi <- which(merc222dist < 132000)
-subset25miHg <- loc_LAmercA[Index25mi,]
-subset25miHg
-#883 observations (mercury measurements)
-unique(subset25miHg$Water.Body.Site)
-#65 unique sites
+#make vector of indexes found within given distance in last step
+Index25mi <- which(merc222dist < 40233.6)
+Index50mi <- which(merc222dist < 80467.2) 
 
-#plot - based on files spatialized in 7.26.18 file
+#subset sites of interest within 25 miles, using vectors of indexes
+subset25miHg222 <- loc_LAmercA[Index25mi,]
+subset25miHg222
+unique(subset25miHg222$Water.Body.Site)
+
+#now 50 miles
+subset50miHg222 <- loc_LAmercA[Index50mi,]
+subset50miHg222
+unique(subset50miHg222$Water.Body.Site)
+
+#plot - based on files with local projections
 plot(loc_NOLA,
      col = "yellow",
-     main = "Merc Sites within 10 miles of Site 222")
+     main = "Merc Sites within 50 miles of Site 222")
 plot(loc_StateBound,
      add = TRUE)
-plot(subset10miHg,
+plot(subset25miHg222,
      pch = 4,
      cex = 1,
      col = "green",
@@ -38,16 +45,58 @@ plot(loc_LAsite222,
      cex = 2,
      col = "purple",
      add = TRUE)
-plot(subset25miHg,
+plot(subset50miHg222,
      pch = 3,
      cex = 1,
      col = "blue",
      add = TRUE)
 
-#IT WORKED! saves as site222_10mile
-unique(subset10miHg$Water.Body.Site)
-# 9 sites in this time frame in the region, within 10 miles
-#118 independent observations for these sites in the time frame
+#IT WORKED! saved images as site222_25miMerc.eps and site222_50miMerc.eps
 
-#checking out real map, seems like the distances may not be correct. Will need to check projections and metrics 
+##Now with site 306
+merc306dist <- spDistsN1(loc_LAmercA, loc_LAsite306, longlat = FALSE) #in m
+merc306dist
+unique(merc306dist)
 
+which(merc306dist < 8046.72) #within 5 miles #returns 0, 
+which(merc306dist < 16093.4) #within 10 miles #returns 0
+which(merc306dist < 40233.6) #within 25 miles #returns 9 sites, 134 observations
+which(merc306dist < 80467.2) #within 50 miles #returns 44 sites, 605 observations
+
+#make vector of indexes found within given distance in last step
+Index25mi306 <- which(merc306dist < 40233.6)
+Index50mi306 <- which(merc306dist < 80467.2) 
+
+#subset sites of interest within 25 miles, using vectors of indexes
+subset25miHg306 <- loc_LAmercA[Index25mi306,]
+head(subset25miHg306)
+unique(subset25miHg306$Collection.Date)
+#only collected from these closest sites in in 2006, 2007.
+#Test dates are all early in the year (Feb to July)
+
+#now 50 miles
+subset50miHg306 <- loc_LAmercA[Index50mi306,]
+subset50miHg306
+unique(subset50miHg306$Collection.Date)
+#contains data for whole time series. 37 distinct collection dates. 
+
+#plot - based on files with local projections
+plot(loc_NOLA,
+     col = "yellow",
+     main = "Merc Sites within 50 miles of Site 306")
+plot(loc_StateBound,
+     add = TRUE)
+plot(subset25miHg306,
+     pch = 4,
+     cex = 1,
+     col = "green",
+     add = TRUE)
+plot(loc_LAsite306,
+     cex = 2,
+     col = "purple",
+     add = TRUE)
+plot(subset50miHg306,
+     pch = 3,
+     cex = 1,
+     col = "blue",
+     add = TRUE)
