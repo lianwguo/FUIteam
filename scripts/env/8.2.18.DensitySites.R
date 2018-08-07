@@ -125,7 +125,7 @@ unique(subset50miHg306$Collection.Date)
 #plot - based on files with local projections
 plot(loc_NOLA,
      col = "yellow",
-     main = "Merc Sites within 50 miles of Site 306")
+     main = "Merc Sites within 25 miles of Site 306")
 plot(loc_StateBound,
      add = TRUE)
 plot(subset25miHg306,
