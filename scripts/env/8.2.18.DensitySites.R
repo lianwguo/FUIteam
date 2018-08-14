@@ -142,3 +142,85 @@ plot(subset50miHg306,
      cex = 1,
      col = "blue",
      add = TRUE)
+
+#making maps with rings
+##attempt 1 - DIDNT WORK
+library(maps)
+library(mapdata)#For the worldHires database
+library(mapproj)#For the mapproject function
+
+plotCircle <- function(LonDec, LatDec, Km) {#Corrected function
+  #LatDec = latitude in decimal degrees of the center of the circle
+  #LonDec = longitude in decimal degrees
+  #Km = radius of the circle in kilometers
+  ER <- 6371000 #Mean Earth radius in meters. Change this to 3959 and you will have your function working in miles.
+  AngDeg <- seq(1:360) #angles in degrees 
+  Lat1Rad <- LatDec*(pi/180)#Latitude of the center of the circle in radians
+  Lon1Rad <- LonDec*(pi/180)#Longitude of the center of the circle in radians
+  AngRad <- AngDeg*(pi/180)#angles in radians
+  Lat2Rad <-asin(sin(Lat1Rad)*cos(Km/ER)+cos(Lat1Rad)*sin(Km/ER)*cos(AngRad)) #Latitude of each point of the circle rearding to angle in radians
+  Lon2Rad <- Lon1Rad+atan2(sin(AngRad)*sin(Km/ER)*cos(Lat1Rad),cos(Km/ER)-sin(Lat1Rad)*sin(Lat2Rad))#Longitude of each point of the circle rearding to angle in radians
+  Lat2Deg <- Lat2Rad*(180/pi)#Latitude of each point of the circle rearding to angle in degrees (conversion of radians to degrees deg = rad*(180/pi) )
+  Lon2Deg <- Lon2Rad*(180/pi)#Longitude of each point of the circle rearding to angle in degrees (conversion of radians to degrees deg = rad*(180/pi) )
+  polygon(Lon2Deg,Lat2Deg,lty=2)
+}
+
+circle <- plotCircle(-90.17831667,29.15833333,25)#Plot a dashed circle of 25 m arround site 222
+
+plot(loc_NOLA,
+         col = "yellow",
+         main = "Merc Sites within 25 miles of Site 306")
+plot(loc_StateBound,
+     add = TRUE)
+plot(subset25miHg306,
+     pch = 4,
+     cex = 1,
+     col = "green",
+     add = TRUE)
+plot(loc_LAsite222,
+     cex = 2,
+     col = "purple",
+     add = TRUE)
+plot(circle,
+     add = TRUE)
+
+##attempt 2
+library(ggplot2)
+library(ggmap)
+data = data.frame(
+  ID = as.numeric(c(1:8)),
+  longitude = as.numeric(c(-63.27462, -63.26499, -63.25658, -63.2519, -63.2311, -63.2175, -63.23623, -63.25958)),
+  latitude = as.numeric(c(17.6328, 17.64614, 17.64755, 17.64632, 17.64888, 17.63113, 17.61252, 17.62463))
+)
+
+#################################################################################
+# create circles data frame from the centers data frame
+make_circles <- function(centers, radius, nPoints = 100){
+  # centers: the data frame of centers with ID
+  # radius: radius measured in kilometer
+  #
+  meanLat <- mean(centers$SiteLat)
+  # length per longitude changes with latitude, so need correction
+  radiusLon <- radius /111 / cos(meanLat/57.3) 
+  radiusLat <- radius / 111
+  circleDF <- data.frame(ID = rep(centers$SiteNum, each = nPoints))
+  angle <- seq(0,2*pi,length.out = nPoints)
+  
+  circleDF$lon <- unlist(lapply(centers$SiteLong, function(x) x + radiusLon * cos(angle)))
+  circleDF$lat <- unlist(lapply(centers$SiteLat, function(x) x + radiusLat * sin(angle)))
+  return(circleDF)
+}
+
+# here is the data frame for all circles
+Circles222 <- make_circles(LAsite222, 40.2336)
+##################################################################################
+Circles222
+
+island = get_map(location = c(lon = -63.247593, lat = 17.631598), zoom = 13, maptype = "satellite")
+islandMap = ggmap(island, extent = "panel", legend = "bottomright")
+RL = geom_point(aes(x = longitude, y = latitude), data = data, color = "#ff0000")
+islandMap + RL + 
+  scale_x_continuous(limits = c(-63.280, -63.21), expand = c(0, 0)) + 
+  scale_y_continuous(limits = c(17.605, 17.66), expand = c(0, 0)) +
+  ########### add circles
+  geom_polygon(data = myCircles, aes(lon, lat, group = ID), color = "red", alpha = 0)
