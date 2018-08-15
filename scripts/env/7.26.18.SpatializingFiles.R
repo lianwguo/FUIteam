@@ -28,6 +28,9 @@ library(maps)
 US_State_Bound <- readOGR(file.path("~/FUIteam/PydioData/env/raw/cb_2017_us_state_500k"), "cb_2017_us_state_500k") ##readOGR(directory,shapefilename)
 plot(US_State_Bound)
 crs(US_State_Bound) # +proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0 
+LA <- subset(US_State_Bound, US_State_Bound$STUSPS == 'LA')
+crs(LA)
+plot(LA)
 
 Stat_Area <- readOGR(file.path("~/FUIteam/PydioData/env/raw/cb_2017_us_cbsa_20m"), "cb_2017_us_cbsa_20m") ##readOGR(directory,shapefilename)
 plot(Stat_Area)

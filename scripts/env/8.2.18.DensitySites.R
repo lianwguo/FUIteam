@@ -214,7 +214,7 @@ make_circles <- function(centers, radius, nPoints = 100){
 # here is the data frame for all circles
 Circles222 <- make_circles(LAsite222, 40.2336)
 ##################################################################################
-Circles222
+head(Circles222)
 
 island = get_map(location = c(lon = -63.247593, lat = 17.631598), zoom = 13, maptype = "satellite")
 islandMap = ggmap(island, extent = "panel", legend = "bottomright")
@@ -223,4 +223,30 @@ islandMap + RL +
   scale_x_continuous(limits = c(-63.280, -63.21), expand = c(0, 0)) + 
   scale_y_continuous(limits = c(17.605, 17.66), expand = c(0, 0)) +
   ########### add circles
-  geom_polygon(data = myCircles, aes(lon, lat, group = ID), color = "red", alpha = 0)
+  
+circle <- geom_polygon(data = Circles222, aes(lon, lat, group = ID), color = "red", alpha = 0)
+class(circle)
+DFcircle <- data.frame(circle)
+
+###mapping with ggplot
+# map the points
+ggplot() + 
+  geom_polygon(data=NOLA, aes(x=long, y=lat), fill="green") +  
+  geom_polygon(data = LA, aes(x=long, y=lat, group = group), colour="black", fill=NA) + ##changing group from ID was important to making this plot work
+  geom_polygon(data = Circles222, aes(lon, lat, group = ID), color = "red", alpha = 0) +
+  geom_point(data=REdfsite222, aes(x=SiteLong, y=SiteLat), color="blue", alpha=1, size = 4, pch=4) +
+  geom_point(data=CloseMerc222, aes(x=LONG, y=LAT), color="purple", alpha=1, size = 2, pch=3) +
+  coord_equal(ratio=1) + # square plot to avoid the distortion 
+  coord_map(xlim = c(-91.5, -88.5),ylim = c(28.7, 30.8)) +
+  labs(x="Longitude", y="Latitude", title="Mercury Testing Sites around Case Study Sites")#labels
+  
+msaExtent <- extent(NOLA)
+msaExtent
+
+
+REdfsite222 <- data.frame(re_LAsite222)
+identical(proj4string(loc_NOLA),proj4string(loc_LAsite222))
+LA <- subset(US_State_Bound, US_State_Bound$STUSPS == 'LA')
+LA
+crs(LA)
+plot(LA)
