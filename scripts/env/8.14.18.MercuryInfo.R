@@ -19,3 +19,25 @@ aggYr222 <- aggregate(cbind(Mercury.Results, Average.Fish.Weight..grams.)~Common
 aggYr222
 write.csv(aggYr222, "~/FUIteam/PydioData/env/data_outputs/aggHgYr222.csv")
 
+
+ggplot(data = CloseMerc306, aes(x = Average.Fish.Length..cm., y = Mercury.Results, color = Common.Name)) + 
+  geom_point() +
+  geom_smooth(method="glm",
+              method.args=list(family=gaussian(link="log")), se = FALSE) +
+  labs(x="Total Length (cm)", y="Methylmercury content (ppm)") + #labels
+  font("xylab", size = 14, face = "bold") +
+  font("axis.text", size = 14) +
+  font("legend.title", size = 14, face = "bold") +
+  font("legend.text", size = 10)
+
+ggplot(data = CloseMerc222, aes(x = Average.Fish.Length..cm., y = Mercury.Results, color = Common.Name)) + 
+  geom_point() +
+  geom_smooth(method="glm",
+              method.args=list(family=gaussian(link="log")), se = FALSE) +
+  labs(x="Total Length (cm)", y="Methylmercury content (ppm)") + #labels
+  font("xylab", size = 14, face = "bold") +
+  font("axis.text", size = 14) +
+  font("legend.title", size = 14, face = "bold") +
+  font("legend.text", size = 10)
+
+
