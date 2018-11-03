@@ -85,12 +85,12 @@ which(merc155dist < 40233.6) #within 25 miles #returns 10 sites, 145 observation
 
 
 #make vector of indexes found within given distance in last step
-Index15mi155 <- which(merc155dist < 24140.2)
+Index15mi155 <- which(merc155dist < 8046.72)
 Index25mi155 <- which(merc155dist < 40233.6)
 
 #subset sites of interest within 15 miles, using vectors of indexes
 subset15miHg155 <- loc_LAmercA[Index15mi155,]
-subset15miHg155
+head(subset15miHg155)
 unique(subset15miHg155$Water.Body.Site)
 unique(subset15miHg155$CollectYear)
 write.csv(subset15miHg155, "~/FUIteam/PydioData/env/data_outputs/subset15miHg155.csv")
