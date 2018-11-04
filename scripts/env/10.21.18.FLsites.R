@@ -402,7 +402,7 @@ unique(subset15mi614$Year)
 write.csv(subset15mi614, "~/FUIteam/PydioData/env/data_outputs/subset15mi614.csv")
 
 head(subset100miHg614)
-unique(subset100miHg614$Bottle)
+unique(subset100miHg614$Species)
 unique(subset100miHg614$Year)
 write.csv(subset100miHg614, "~/FUIteam/PydioData/env/data_outputs/subset100miHg614.csv")
 
@@ -426,7 +426,7 @@ subset10mi3802 <- loc_FLmerc[Index10mi3802,]
 subset100miHg3802 <- loc_FLmerc[Index100mi3802,]
 
 head(subset10mi3802)
-unique(subset10mi3802$Bottle)
+unique(subset10mi3802$Species)
 unique(subset10mi3802$Year)
 write.csv(subset10mi3802, "~/FUIteam/PydioData/env/data_outputs/subset10mi3802.csv")
 
@@ -435,4 +435,60 @@ unique(subset100miHg3802$Bottle)
 unique(subset100miHg3802$Species)
 write.csv(subset100miHg3802, "~/FUIteam/PydioData/env/data_outputs/subset100miHg3802.csv")
 
+#FL241ExampleA
+plot(loc_FLbound,
+     main = "Site241 Example")
+plot(loc_FLsite241,
+     pch = 2,
+     cex = 1.5,
+     col = "green",
+     add = TRUE)
+plot(subset100miHg241,
+     pch = 5,
+     cex = .5,
+     col = "red",
+     add = TRUE)
+plot(subset10mi241,
+     pch = 5,
+     cex = 1,
+     col = "blue",
+     add = TRUE)
 
+#FL241ExampleB
+plot(loc_Tampa,
+     col = "yellow",
+     main = "Site241 Example")
+plot(loc_FLsite241,
+     pch = 2,
+     cex = 1.5,
+     col = "green",
+     add = TRUE)
+plot(subset100miHg241,
+     pch = 5,
+     cex = .5,
+     col = "red",
+     add = TRUE)
+plot(loc_FLbound,
+     add = TRUE)
+
+#FL241ExampleC
+plot(subset100miHg241,
+     pch = 5,
+     cex = .5,
+     col = "red",
+     main = "Site241 Example")
+plot(loc_FLbound,
+     add = TRUE)
+plot(loc_Tampa,
+     col = "yellow",
+     add = TRUE)
+plot(loc_FLsite241,
+     pch = 2,
+     cex = 1.5,
+     col = "green",
+     add = TRUE)
+plot(subset100miHg241,
+     pch = 5,
+     cex = .5,
+     col = "red",
+     add = TRUE)
