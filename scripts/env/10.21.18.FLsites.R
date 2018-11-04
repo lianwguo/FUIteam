@@ -212,7 +212,7 @@ which(merc769dist < 26400) #within 5 miles #returns 0,
 which(merc769dist < 52800) #within 10 miles #returns 1
 which(merc769dist < 79200) #within 15 miles #returns 1
 which(merc769dist < 132000) #within 25 miles #returns 1
-which(merc769dist < 528000) #within 100 miles #returns 13
+which(merc769dist < 528000) #within 100 miles #returns 63
 
 #make vector of indexes found within given distance in last step
 Index10mi769 <- which(merc769dist < 52800)
@@ -240,7 +240,8 @@ which(merc770dist < 26400) #within 5 miles #returns 0,
 which(merc770dist < 52800) #within 10 miles #returns 1
 which(merc770dist < 79200) #within 15 miles #returns 1
 which(merc770dist < 132000) #within 25 miles #returns 1
-which(merc770dist < 528000) #within 100 miles #returns 0
+which(merc770dist < 264000) #within 50 miles #returns 1
+which(merc770dist < 528000) #within 100 miles #returns 63
 
 #make vector of indexes found within given distance in last step
 Index10mi770 <- which(merc770dist < 52800)
@@ -259,3 +260,179 @@ head(subset100miHg770)
 unique(subset100miHg770$Bottle)
 unique(subset100miHg770$Year)
 write.csv(subset100miHg770, "~/FUIteam/PydioData/env/data_outputs/subset100miHg770.csv")
+
+#distances based on local projection, site 742
+merc742dist <- spDistsN1(loc_FLmerc, loc_FLsite742, longlat = FALSE) #in ft
+merc742dist
+
+which(merc742dist < 26400) #within 5 miles #returns 0, 
+which(merc742dist < 52800) #within 10 miles #returns 0
+which(merc742dist < 79200) #within 15 miles #returns 0
+which(merc742dist < 132000) #within 25 miles #returns 1
+which(merc742dist < 264000) #within 50 miles #returns 1
+which(merc742dist < 528000) #within 100 miles #returns 159
+
+#make vector of indexes found within given distance in last step
+Index25mi742 <- which(merc742dist < 132000)
+Index100mi742 <- which(merc742dist < 528000)
+
+#subset sites of interest within 10 and 100 miles, using vectors of indexes
+subset25mi742 <- loc_FLmerc[Index25mi742,]
+subset100miHg742 <- loc_FLmerc[Index100mi742,]
+
+head(subset25mi742)
+unique(subset25mi742$Bottle)
+unique(subset25mi742$Year)
+write.csv(subset25mi742, "~/FUIteam/PydioData/env/data_outputs/subset25mi742.csv")
+
+head(subset100miHg742)
+unique(subset100miHg742$Bottle)
+unique(subset100miHg742$Year)
+write.csv(subset100miHg742, "~/FUIteam/PydioData/env/data_outputs/subset100miHg742.csv")
+
+#distances based on local projection, site 241
+merc241dist <- spDistsN1(loc_FLmerc, loc_FLsite241, longlat = FALSE) #in ft
+merc241dist
+
+which(merc241dist < 26400) #within 5 miles #returns 0, 
+which(merc241dist < 52800) #within 10 miles #returns 1
+which(merc241dist < 79200) #within 15 miles #returns 1
+which(merc241dist < 132000) #within 25 miles #returns 1
+which(merc241dist < 264000) #within 50 miles #returns 1
+which(merc241dist < 528000) #within 100 miles #returns 78
+
+#make vector of indexes found within given distance in last step
+Index10mi241 <- which(merc241dist < 52800)
+Index100mi241 <- which(merc241dist < 528000)
+
+#subset sites of interest within 10 and 100 miles, using vectors of indexes
+subset10mi241 <- loc_FLmerc[Index10mi241,]
+subset100miHg241 <- loc_FLmerc[Index100mi241,]
+
+head(subset10mi241)
+unique(subset10mi241$Bottle)
+unique(subset10mi241$Year)
+write.csv(subset10mi241, "~/FUIteam/PydioData/env/data_outputs/subset10mi241.csv")
+
+head(subset100miHg241)
+unique(subset100miHg241$Bottle)
+unique(subset100miHg241$Year)
+write.csv(subset100miHg241, "~/FUIteam/PydioData/env/data_outputs/subset100miHg241.csv")
+
+#distances based on local projection, site 712
+merc712dist <- spDistsN1(loc_FLmerc, loc_FLsite712, longlat = FALSE) #in ft
+merc712dist
+
+which(merc712dist < 26400) #within 5 miles #returns 0, 
+which(merc712dist < 52800) #within 10 miles #returns 0
+which(merc712dist < 79200) #within 15 miles #returns 0
+which(merc712dist < 132000) #within 25 miles #returns 1
+which(merc712dist < 264000) #within 50 miles #returns 1
+which(merc712dist < 528000) #within 100 miles #returns 163
+
+#make vector of indexes found within given distance in last step
+Index25mi712 <- which(merc712dist < 132000)
+Index100mi712 <- which(merc712dist < 528000)
+
+#subset sites of interest within 10 and 100 miles, using vectors of indexes
+subset25mi712 <- loc_FLmerc[Index25mi712,]
+subset100miHg712 <- loc_FLmerc[Index100mi712,]
+
+head(subset25mi712)
+unique(subset25mi712$Bottle)
+unique(subset25mi712$Year)
+write.csv(subset25mi712, "~/FUIteam/PydioData/env/data_outputs/subset25mi712.csv")
+
+head(subset100miHg712)
+unique(subset100miHg712$Bottle)
+unique(subset100miHg712$Year)
+write.csv(subset100miHg712, "~/FUIteam/PydioData/env/data_outputs/subset100miHg712.csv")
+
+#distances based on local projection, site 615
+merc615dist <- spDistsN1(loc_FLmerc, loc_FLsite615, longlat = FALSE) #in ft
+merc615dist
+
+which(merc615dist < 26400) #within 5 miles #returns 0, 
+which(merc615dist < 52800) #within 10 miles #returns 0
+which(merc615dist < 79200) #within 15 miles #returns 0
+which(merc615dist < 132000) #within 25 miles #returns 1
+which(merc615dist < 264000) #within 50 miles #returns 1
+which(merc615dist < 528000) #within 100 miles #returns 163
+
+#make vector of indexes found within given distance in last step
+Index25mi615 <- which(merc615dist < 132000)
+Index100mi615 <- which(merc615dist < 528000)
+
+#subset sites of interest within 10 and 100 miles, using vectors of indexes
+subset25mi615 <- loc_FLmerc[Index25mi615,]
+subset100miHg615 <- loc_FLmerc[Index100mi615,]
+
+head(subset25mi615)
+unique(subset25mi615$Bottle)
+unique(subset25mi615$Year)
+write.csv(subset25mi615, "~/FUIteam/PydioData/env/data_outputs/subset25mi615.csv")
+
+head(subset100miHg615)
+unique(subset100miHg615$Bottle)
+unique(subset100miHg615$Year)
+write.csv(subset100miHg615, "~/FUIteam/PydioData/env/data_outputs/subset100miHg615.csv")
+
+#distances based on local projection, site 614
+merc614dist <- spDistsN1(loc_FLmerc, loc_FLsite614, longlat = FALSE) #in ft
+merc614dist
+
+which(merc614dist < 26400) #within 5 miles #returns 0, 
+which(merc614dist < 52800) #within 10 miles #returns 0
+which(merc614dist < 79200) #within 15 miles #returns 1
+which(merc614dist < 132000) #within 25 miles #returns 1
+which(merc614dist < 264000) #within 50 miles #returns 1
+which(merc614dist < 528000) #within 100 miles #returns 151
+
+#make vector of indexes found within given distance in last step
+Index15mi614 <- which(merc614dist < 79200)
+Index100mi614 <- which(merc614dist < 528000)
+
+#subset sites of interest within 10 and 100 miles, using vectors of indexes
+subset15mi614 <- loc_FLmerc[Index15mi614,]
+subset100miHg614 <- loc_FLmerc[Index100mi614,]
+
+head(subset15mi614)
+unique(subset15mi614$Bottle)
+unique(subset15mi614$Year)
+write.csv(subset15mi614, "~/FUIteam/PydioData/env/data_outputs/subset15mi614.csv")
+
+head(subset100miHg614)
+unique(subset100miHg614$Bottle)
+unique(subset100miHg614$Year)
+write.csv(subset100miHg614, "~/FUIteam/PydioData/env/data_outputs/subset100miHg614.csv")
+
+#distances based on local projection, site 3802
+merc3802dist <- spDistsN1(loc_FLmerc, loc_FLsite3802, longlat = FALSE) #in ft
+merc3802dist
+
+which(merc3802dist < 26400) #within 5 miles #returns 0, 
+which(merc3802dist < 52800) #within 10 miles #returns 1
+which(merc3802dist < 79200) #within 15 miles #returns 1
+which(merc3802dist < 132000) #within 25 miles #returns 1
+which(merc3802dist < 264000) #within 50 miles #returns 1
+which(merc3802dist < 528000) #within 100 miles #returns 63
+
+#make vector of indexes found within given distance in last step
+Index10mi3802 <- which(merc3802dist < 52800)
+Index100mi3802 <- which(merc3802dist < 528000)
+
+#subset sites of interest within 10 and 100 miles, using vectors of indexes
+subset10mi3802 <- loc_FLmerc[Index10mi3802,]
+subset100miHg3802 <- loc_FLmerc[Index100mi3802,]
+
+head(subset10mi3802)
+unique(subset10mi3802$Bottle)
+unique(subset10mi3802$Year)
+write.csv(subset10mi3802, "~/FUIteam/PydioData/env/data_outputs/subset10mi3802.csv")
+
+head(subset100miHg3802)
+unique(subset100miHg3802$Bottle)
+unique(subset100miHg3802$Species)
+write.csv(subset100miHg3802, "~/FUIteam/PydioData/env/data_outputs/subset100miHg3802.csv")
+
+
