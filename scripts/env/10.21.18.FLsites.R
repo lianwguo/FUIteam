@@ -354,10 +354,10 @@ merc615dist
 
 which(merc615dist < 26400) #within 5 miles #returns 0, 
 which(merc615dist < 52800) #within 10 miles #returns 0
-which(merc615dist < 79200) #within 15 miles #returns 0
+which(merc615dist < 79200) #within 15 miles #returns 1
 which(merc615dist < 132000) #within 25 miles #returns 1
 which(merc615dist < 264000) #within 50 miles #returns 1
-which(merc615dist < 528000) #within 100 miles #returns 163
+which(merc615dist < 528000) #within 100 miles #returns 142
 
 #make vector of indexes found within given distance in last step
 Index25mi615 <- which(merc615dist < 132000)

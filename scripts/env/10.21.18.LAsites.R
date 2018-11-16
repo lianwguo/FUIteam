@@ -82,11 +82,12 @@ which(merc155dist < 8046.72) #within 5 miles #returns 0,
 which(merc155dist < 16093.4) #within 10 miles #returns 0
 which(merc155dist < 24140.2) #within 15 miles #returns 3 sites, 50 observations, 2 years
 which(merc155dist < 40233.6) #within 25 miles #returns 10 sites, 145 observations, 3 years
-
+which(merc155dist < 160934) #within 100 miles #returns 
 
 #make vector of indexes found within given distance in last step
 Index15mi155 <- which(merc155dist < 8046.72)
 Index25mi155 <- which(merc155dist < 40233.6)
+Index100mi155 <- which(merc155dist < 160934)
 
 #subset sites of interest within 15 miles, using vectors of indexes
 subset15miHg155 <- loc_LAmercA[Index15mi155,]
@@ -101,6 +102,13 @@ subset25miHg155
 unique(subset25miHg155$Water.Body.Site)
 unique(subset25miHg155$CollectYear)
 write.csv(subset25miHg155, "~/FUIteam/PydioData/env/data_outputs/subset25miHg155.csv")
+
+#subset sites of interest within 100 miles, using vectors of indexes
+subset100miHg155 <- loc_LAmercA[Index100mi155,]
+subset100miHg155
+unique(subset100miHg155$Water.Body.Site)
+unique(subset100miHg155$CollectYear)
+write.csv(subset100miHg155, "~/FUIteam/PydioData/env/data_outputs/subset100miHg155.csv")
 
 #plot all points
 plot(loc_NOLA,
@@ -131,13 +139,20 @@ which(merc150dist < 8046.72) #within 5 miles #returns 0,
 which(merc150dist < 16093.4) #within 10 miles #returns 0
 which(merc150dist < 24140.2) #within 15 miles #returns 0
 which(merc150dist < 40233.6) #within 25 miles #returns 2 sites, 28 observations, 1 year
+which(merc150dist < 160934) #within 100 miles #returns  sites, 28 observations, 1 year
 
+#25 miles
 Index25mi150 <- which(merc150dist < 40233.6)
-
 subset25miHg150 <- loc_LAmercA[Index25mi150,]
 unique(subset25miHg150$Water.Body.Site)
 unique(subset25miHg150$CollectYear)
 write.csv(subset25miHg150, "~/FUIteam/PydioData/env/data_outputs/subset25miHg150.csv")
+#100 miles
+Index100mi150 <- which(merc150dist < 160934)
+subset100miHg150 <- loc_LAmercA[Index100mi150,]
+unique(subset100miHg150$Water.Body.Site)
+unique(subset100miHg150$CollectYear)
+write.csv(subset100miHg150, "~/FUIteam/PydioData/env/data_outputs/subset100miHg150.csv")
 
 #plot all points
 plot(loc_NOLA,
@@ -163,13 +178,19 @@ which(merc151dist < 8046.72) #within 5 miles #returns 0,
 which(merc151dist < 16093.4) #within 10 miles #returns 0
 which(merc151dist < 24140.2) #within 15 miles #returns 0
 which(merc151dist < 40233.6) #within 25 miles #returns 2 sites, 28 observations, 1 year
+which(merc151dist < 160934) #within 100 miles 
 
 Index25mi151 <- which(merc151dist < 40233.6)
-
 subset25miHg151 <- loc_LAmercA[Index25mi151,]
 unique(subset25miHg151$Water.Body.Site)
 unique(subset25miHg151$CollectYear)
 write.csv(subset25miHg151, "~/FUIteam/PydioData/env/data_outputs/subset25miHg151.csv")
+
+Index100mi151 <- which(merc151dist < 160934)
+subset100miHg151 <- loc_LAmercA[Index100mi151,]
+unique(subset100miHg151$Water.Body.Site)
+unique(subset100miHg151$CollectYear)
+write.csv(subset100miHg151, "~/FUIteam/PydioData/env/data_outputs/subset100miHg151.csv")
 
 #plot all points
 plot(loc_NOLA,
@@ -195,13 +216,19 @@ which(merc159dist < 8046.72) #within 5 miles #returns 0,
 which(merc159dist < 16093.4) #within 10 miles #returns 0
 which(merc159dist < 24140.2) #within 15 miles #returns 0
 which(merc159dist < 40233.6) #within 25 miles #returns 3 sites, 44 observations, 1 year
+which(merc159dist < 160934) #within 100 miles
 
 Index25mi159 <- which(merc159dist < 40233.6)
-
 subset25miHg159 <- loc_LAmercA[Index25mi159,]
 unique(subset25miHg159$Water.Body.Site)
 unique(subset25miHg159$CollectYear)
 write.csv(subset25miHg159, "~/FUIteam/PydioData/env/data_outputs/subset25miHg159.csv")
+
+Index100mi159 <- which(merc159dist < 160934)
+subset100miHg159 <- loc_LAmercA[Index100mi159,]
+unique(subset100miHg159$Water.Body.Site)
+unique(subset100miHg159$CollectYear)
+write.csv(subset100miHg159, "~/FUIteam/PydioData/env/data_outputs/subset100miHg159.csv")
 
 #plot all points
 plot(loc_NOLA,
@@ -234,7 +261,7 @@ which(merc222distB < 16093.4) #within 10 miles #returns 0
 which(merc222distB < 24140.2) #within 15 miles #returns 0
 which(merc222distB < 40233.6) #within 25 miles #returns 0
 which(merc222distB < 80467.2) #within 50 miles #returns 0
-which(merc222distB < 161000) #within 100 miles #returns 0
+which(merc222distB < 160934) #within 100 miles #returns 0
 which(merc222distB < 321869) #within 200 miles #returns 0, two sites, 25 observations
 
 #make vector of indexes found within given distance in last step
