@@ -87,7 +87,7 @@ which(merc155dist < 160934) #within 100 miles #returns
 #make vector of indexes found within given distance in last step
 Index15mi155 <- which(merc155dist < 8046.72)
 Index25mi155 <- which(merc155dist < 40233.6)
-Index100mi155 <- which(merc155dist < 160934)
+Index100mi155 <- which(merc155dist < 160934.4)
 
 #subset sites of interest within 15 miles, using vectors of indexes
 subset15miHg155 <- loc_LAmercA[Index15mi155,]
@@ -248,7 +248,7 @@ plot(subset25miHg159,
      add = TRUE)
 
 #######################################
-#start looking at density of sites for time A (2010-2013)
+#start looking at density of sites for time B (2010-2013)
 LAmripB #2010-2013
 #case study sites: 222, 159, 306, 151, 150
 #using sp package
@@ -364,4 +364,21 @@ subset200miHg150B <- loc_LAmerc2010[Index200mi150B,]
 subset200miHg150B
 unique(subset200miHg150B$Water.Body.Site)
 write.csv(subset200miHg150B, "~/FUIteam/PydioData/env/data_outputs/subset200miHg150B.csv")
+
+###site 222 has no sites within 100 mi for time frame 2 so will use the one 
+###made for the first time frame to calculate stats
+merc306distB <- spDistsN1(loc_LAmerc2010, loc_LAsite306, longlat = FALSE) #in m
+merc306distB
+
+which(merc306distB < 40233.6) #within 25 miles #returns 0
+which(merc306distB < 160934.4) #within 100 miles #returns 1 site
+
+#make vector of indexes found within given distance in last step
+Index100mi306B <- which(merc306distB < 160934.4)
+
+#subset sites of interest within 200 miles, using vectors of indexes
+subset100miHg306B <- loc_LAmerc2010[Index100mi306B,]
+subset100miHg306B
+unique(subset100miHg306B$Water.Body.Site)
+write.csv(subset100miHg306B, "~/FUIteam/PydioData/env/data_outputs/subset100miHg306B.csv")
 

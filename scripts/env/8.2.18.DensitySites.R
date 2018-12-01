@@ -15,10 +15,11 @@ which(merc222dist < 8046.72) #within 5 miles #returns 0,
 which(merc222dist < 16093.4) #within 10 miles #returns 0
 which(merc222dist < 40233.6) #within 25 miles #returns 3 sites, 44 observations
 which(merc222dist < 80467.2) #within 50 miles #returns 36 sites, 493 observations
+which(merc222dist < 160934.4) #within 100 miles #returns 100 sites, observations
 
 #make vector of indexes found within given distance in last step
 Index25mi <- which(merc222dist < 40233.6)
-Index50mi <- which(merc222dist < 80467.2) 
+Index100mi <- which(merc222dist < 160934.4) 
 
 #subset sites of interest within 25 miles, using vectors of indexes
 subset25miHg222 <- loc_LAmercA[Index25mi,]
@@ -47,10 +48,11 @@ spFreq222
 write.csv(spFreq222, "~/FUIteam/PydioData/env/data_outputs/spFreq222.csv")
 
 
-#now 50 miles
-subset50miHg222 <- loc_LAmercA[Index50mi,]
-subset50miHg222
-unique(subset50miHg222$Water.Body.Site)
+#now 100 miles
+subset100miHg222 <- loc_LAmercA[Index100mi,]
+subset100miHg222
+unique(subset100miHg222$Water.Body.Site)
+write.csv(subset100miHg222, "~/FUIteam/PydioData/env/data_outputs/subset100miHg222.csv")
 
 
 #plot - based on files with local projections
@@ -85,10 +87,11 @@ which(merc306dist < 8046.72) #within 5 miles #returns 0,
 which(merc306dist < 16093.4) #within 10 miles #returns 0
 which(merc306dist < 40233.6) #within 25 miles #returns 9 sites, 134 observations
 which(merc306dist < 80467.2) #within 50 miles #returns 44 sites, 605 observations
+which(merc306dist < 160934.4) #within 100 miles #returns 121 sites
 
 #make vector of indexes found within given distance in last step
 Index25mi306 <- which(merc306dist < 40233.6)
-Index50mi306 <- which(merc306dist < 80467.2) 
+Index100mi306 <- which(merc306dist < 160934.4) 
 
 #subset sites of interest within 25 miles, using vectors of indexes
 subset25miHg306 <- loc_LAmercA[Index25mi306,]
@@ -96,6 +99,8 @@ head(subset25miHg306)
 unique(subset25miHg306$Water.Body.Site)
 unique(subset25miHg306$Collection.Date)
 unique(subset25miHg306$CollectYear)
+write.csv(subset25miHg306, "~/FUIteam/PydioData/env/data_outputs/subset25miHg306.csv")
+
 #only collected from these closest sites in in 2006, 2007.
 #Test dates are all early in the year (Feb to July)
 
@@ -116,10 +121,13 @@ spFreq306 <- with(CloseMerc306, table(Water.Body.Site, Common.Name, CollectYear)
 spFreq306
 write.csv(spFreq306, "~/FUIteam/PydioData/env/data_outputs/spFreq306.csv")
 
-#now 50 miles
-subset50miHg306 <- loc_LAmercA[Index50mi306,]
-subset50miHg306
-unique(subset50miHg306$Collection.Date)
+#now 100 miles
+subset100miHg306 <- loc_LAmercA[Index100mi306,]
+subset100miHg306
+unique(subset100miHg306$CollectYear)
+unique(subset100miHg306$Water.Body.Site)
+write.csv(subset100miHg306, "~/FUIteam/PydioData/env/data_outputs/subset100miHg306.csv")
+
 #contains data for whole time series. 37 distinct collection dates. 
 
 #plot - based on files with local projections
