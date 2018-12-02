@@ -192,6 +192,23 @@ unique(subset100miHg151$Water.Body.Site)
 unique(subset100miHg151$CollectYear)
 write.csv(subset100miHg151, "~/FUIteam/PydioData/env/data_outputs/subset100miHg151.csv")
 
+#plot all points 25 mi
+plot(loc_NOLA,
+     col = "yellow",
+     main = "top landing sites")
+plot(loc_StateBound,
+     add = TRUE)
+plot(loc_LAsite151,
+     pch = 4,
+     cex = 1,
+     col = "green",
+     add = TRUE)
+plot(subset25miHg151,
+     pch = 5,
+     cex = .2,
+     col = 'red',
+     add = TRUE)
+
 #plot all points
 plot(loc_NOLA,
      col = "yellow",
@@ -230,18 +247,96 @@ unique(subset100miHg159$Water.Body.Site)
 unique(subset100miHg159$CollectYear)
 write.csv(subset100miHg159, "~/FUIteam/PydioData/env/data_outputs/subset100miHg159.csv")
 
+#plot all points 100 mi
+plot(loc_NOLA,
+     col = "yellow",
+     main = "100 mile mercury sites")
+plot(loc_StateBound,
+     add = TRUE)
+plot(subset100miHg159,
+     pch = 5,
+     cex = .2,
+     col = 'red',
+     add = TRUE)
+plot(subset100miHg155,
+     pch = 5,
+     cex = .2,
+     col = 'red',
+     add = TRUE)
+plot(subset100miHg150,
+     pch = 5,
+     cex = .2,
+     col = 'red',
+     add = TRUE)
+plot(subset100miHg151,
+     pch = 5,
+     cex = .2,
+     col = 'red',
+     add = TRUE)
+plot(subset100miHg222,
+     pch = 5,
+     cex = .2,
+     col = 'red',
+     add = TRUE)
+plot(subset100miHg306,
+     pch = 5,
+     cex = .2,
+     col = 'red',
+     add = TRUE)
+
+#distances based on local projection, site 159
+merc159dist <- spDistsN1(loc_LAmercB, loc_LAsite159, longlat = FALSE) #in m
+
+which(merc159dist < 8046.72) #within 5 miles #returns 0, 
+which(merc159dist < 16093.4) #within 10 miles #returns 0
+which(merc159dist < 24140.2) #within 15 miles #returns 0
+which(merc159dist < 40233.6) #within 25 miles #returns 3 sites, 44 observations, 1 year
+which(merc159dist < 160934) #within 100 miles
+
+Index25mi159 <- which(merc159dist < 40233.6)
+subset25miHg159 <- loc_LAmercA[Index25mi159,]
+unique(subset25miHg159$Water.Body.Site)
+unique(subset25miHg159$CollectYear)
+write.csv(subset25miHg159, "~/FUIteam/PydioData/env/data_outputs/subset25miHg159.csv")
+
+Index100mi159 <- which(merc159dist < 160934)
+subset100miHg159 <- loc_LAmercA[Index100mi159,]
+unique(subset100miHg159$Water.Body.Site)
+unique(subset100miHg159$CollectYear)
+write.csv(subset100miHg159, "~/FUIteam/PydioData/env/data_outputs/subset100miHg159.csv")
+
 #plot all points
 plot(loc_NOLA,
      col = "yellow",
-     main = "top landing sites")
+     main = "25 mile mercury sites")
 plot(loc_StateBound,
      add = TRUE)
-plot(loc_LAsite159,
-     pch = 4,
-     cex = 1,
-     col = "green",
-     add = TRUE)
 plot(subset25miHg159,
+     pch = 5,
+     cex = .2,
+     col = 'red',
+     add = TRUE)
+plot(subset25miHg155,
+     pch = 5,
+     cex = .2,
+     col = 'red',
+     add = TRUE)
+plot(subset25miHg150,
+     pch = 5,
+     cex = .2,
+     col = 'red',
+     add = TRUE)
+plot(subset25miHg151,
+     pch = 5,
+     cex = .2,
+     col = 'red',
+     add = TRUE)
+plot(subset25miHg222,
+     pch = 5,
+     cex = .2,
+     col = 'red',
+     add = TRUE)
+plot(subset25miHg306,
      pch = 5,
      cex = .2,
      col = 'red',
