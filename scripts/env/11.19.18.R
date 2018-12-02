@@ -29,14 +29,14 @@ uniFL100mi <- ddply(FL100mi, c("Site","LatDD","LonDDr"), head, 1)
 str(subset(uniFL100mi, uniFL100mi$Site == 3802))
 
 #aggregating mercury results
-LA25AveHgSp <- aggregate(Mercury.Results~Common.Name, data=LA25mi, FUN=function(x) c(mean=mean(x), count=length(x)))
-LA100AveHgSp <- aggregate(Mercury.Results~Common.Name, data=LA100mi, FUN=function(x) c(mean=mean(x), count=length(x)))
+LA25AveHgSp <- aggregate(Mercury.Results~Common.Name, data=LA25miSW, FUN=function(x) c(mean=mean(x), count=length(x)))
+LA100AveHgSp <- aggregate(Mercury.Results~Common.Name, data=LA100miSW, FUN=function(x) c(mean=mean(x), count=length(x)))
 LA100AveHgSp
 write.csv(LA25AveHgSp, "~/FUIteam/PydioData/env/data_outputs/LA25AveHgSp.csv")
 write.csv(LA100AveHgSp, "~/FUIteam/PydioData/env/data_outputs/LA100AveHgSp.csv")
 
 ###by length
-ggplot(data = LA25mi, aes(x = Average.Fish.Length..cm., y = Mercury.Results, color = Common.Name)) + 
+ggplot(data = LA25miSW, aes(x = Average.Fish.Length..cm., y = Mercury.Results, color = Common.Name)) + 
   geom_point() +
   geom_smooth(method="glm",
               method.args=list(family=gaussian(link="log")), se = FALSE) +
@@ -47,7 +47,7 @@ ggplot(data = LA25mi, aes(x = Average.Fish.Length..cm., y = Mercury.Results, col
   font("legend.text", size = 10)
 
 ###BY WEIGHT
-ggplot(data = LA25mi, aes(x = Average.Fish.Weight..grams., y = Mercury.Results, color = Common.Name)) + 
+ggplot(data = LA25miSW, aes(x = Average.Fish.Weight..grams., y = Mercury.Results, color = Common.Name)) + 
   geom_point() +
   geom_smooth(method="glm",
               method.args=list(family=gaussian(link="log")), se = FALSE) +
@@ -57,8 +57,7 @@ ggplot(data = LA25mi, aes(x = Average.Fish.Weight..grams., y = Mercury.Results, 
   font("legend.title", size = 14, face = "bold") +
   font("legend.text", size = 10)
 
-
-ggplot(data = LA100mi, aes(x = Average.Fish.Length..cm., y = Mercury.Results, color = Common.Name)) + 
+ggplot(data = LA100miSW, aes(x = Average.Fish.Length..cm., y = Mercury.Results, color = Common.Name)) + 
   geom_point() +
   geom_smooth(method="glm",
               method.args=list(family=gaussian(link="log")), se = FALSE) +
