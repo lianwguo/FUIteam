@@ -49,7 +49,8 @@ noDupLA25AveHgSp <- aggregate(Mercury.Results~Common.Name, data=noDupLA25mi, FUN
 noDupLA100AveHgSp <- aggregate(Mercury.Results~Common.Name, data=noDupLA100mi, FUN=function(x) c(mean=mean(x), count=length(x)))
 write.csv(noDupLA25AveHgSp, "~/FUIteam/PydioData/env/data_outputs/noDupLA25AveHgSp.csv")
 write.csv(noDupLA100AveHgSp, "~/FUIteam/PydioData/env/data_outputs/noDupLA100AveHgSp.csv")
-#average size
+write.csv(noDupLA100mi, "~/FUIteam/PydioData/env/data_outputs/noDupLA100mi.csv")
+#average size.  is in cm
 LA25AveLengthSp <- aggregate(Average.Fish.Length..cm.~Common.Name, data=noDupLA25mi, FUN=function(x) c(mean=mean(x), count=length(x)))
 LA100AveLengthSp <- aggregate(Average.Fish.Length..cm.~Common.Name, data=noDupLA100mi, FUN=function(x) c(mean=mean(x), count=length(x)))
 write.csv(LA25AveLengthSp, "~/FUIteam/PydioData/env/data_outputs/LA25AveLengthSp.csv")
@@ -66,7 +67,8 @@ noDupFL25AveHgSp <- aggregate(Hg~Species, data=noDupFL25mi, FUN=function(x) c(me
 noDupFL100AveHgSp <- aggregate(Hg~Species, data=noDupFL100mi, FUN=function(x) c(mean=mean(x), count=length(x)))
 write.csv(noDupFL25AveHgSp, "~/FUIteam/PydioData/env/data_outputs/noDupFL25AveHgSp.csv")
 write.csv(noDupFL100AveHgSp, "~/FUIteam/PydioData/env/data_outputs/noDupFL100AveHgSp.csv")
-# by length
+write.csv(noDupFL100mi, "~/FUIteam/PydioData/env/data_outputs/noDupFL100mi.csv")
+# by length. florida is in mm
 FL25AveLengthSp <- aggregate(TL~Species, data=noDupFL25mi, FUN=function(x) c(mean=mean(x), count=length(x)))
 FL100AveLengthSp <- aggregate(TL~Species, data=noDupFL100mi, FUN=function(x) c(mean=mean(x), count=length(x)))
 write.csv(FL25AveLengthSp, "~/FUIteam/PydioData/env/data_outputs/FL25AveLengthSp.csv")
