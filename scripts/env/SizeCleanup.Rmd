@@ -1,0 +1,67 @@
+---
+title: "Size Exploration"
+output: html_notebook
+---
+
+#vis of florida sizes by source
+
+```{r}
+ggplot(atlSharkT,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point()
+
+ggplot(blackSharkT,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point()
+
+ggplot(bonnetT,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point()
+
+ggplot(crevalleT,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point() #ok
+
+ggplot(flPompT,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point()
+
+ggplot(floundT,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point()
+
+ggplot(redDrumT,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point()
+
+ggplot(kingT,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point()
+
+ggplot(mackT,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point()#ok
+
+ggplot(seatroutT,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point() #?
+```
+
+#vis for NOLA
+
+
+```{r}
+ggplot(redDrumNO,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point()
+
+ggplot(blackDrumNO,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point()
+
+ggplot(sheepsNO,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point()
+
+ggplot(sFlounderNO,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point()
+
+ggplot(seatroutNO,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point()
+
+ggplot(snapperNO,aes(x=aveLen, y=aveWt, color=source)) +
+  geom_point()
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

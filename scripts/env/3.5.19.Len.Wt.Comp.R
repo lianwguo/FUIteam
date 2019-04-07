@@ -14,6 +14,7 @@ nolaOverlap <- subset(sizeComp, sizeComp$caseStudy == 'NOLA' & sizeComp$species 
          sizeComp$caseStudy == 'NOLA' & sizeComp$species == 'SPOTTED SEATROUT')
 
 str(nolaOverlap)
+write.csv(nolaOverlap, "~/FUIteam/PydioData/env/data_outputs/nolaOverlap.csv")
 
 # NOLA histograms
 ggplot(nolaOverlap, aes(x=aveLen, color=source)) +
@@ -44,9 +45,11 @@ tflOverlap <- subset(sizeComp, sizeComp$caseStudy == 'TFL' & sizeComp$species ==
                        sizeComp$caseStudy == 'TFL' & sizeComp$species == 'SPOTTED SEATROUT')
 str(tflOverlap)
 tflOverlap$aveWt <- as.numeric(tflOverlap$aveWt)
+write.csv(tflOverlap, "~/FUIteam/PydioData/env/data_outputs/tflOverlap.csv")
 
+tflOverlapTL <- read.csv(file.path("~/FUIteam/PydioData/env/data_outputs/", "tflOverlapTL.csv"))
 #new column for reordering facet wrap
-tflOverlap$facet = factor(tflOverlap$species, levels = c("ATLANTIC SHARPNOSE SHARK", "BLACKTIP SHARK", 
+tflOverlapTL$facet = factor(tflOverlap$species, levels = c("ATLANTIC SHARPNOSE SHARK", "BLACKTIP SHARK", 
                                                            "BONNETHEAD", "CREVALLE JACK", 
                                                          "FLORIDA POMPANO", "GULF FLOUNDER","RED DRUM",
                                                          "SOUTHERN KINGFISH", "SPANISH MACKEREL",
@@ -125,7 +128,7 @@ t.test(aveWt~source, data = snapperNO) ##NS, still low sample size, 0.6805
 unique(nolaOverlap$species)
 
 #and t-tests for florida
-ggplot(seatroutT,aes(x=aveLen, y=aveWt, color=source)) +
+ggplot(atlSharkT,aes(x=aveLen, y=aveWt, color=source)) +
   geom_point()
 ggplot(seatroutT,aes(x=source, y=aveLen)) +
   geom_point()
@@ -133,45 +136,45 @@ ggplot(seatroutT,aes(x=source, y=aveWt)) +
   geom_point()
 crevalleT
 
-atlSharkT <- subset(tflOverlap, tflOverlap$species == 'ATLANTIC SHARPNOSE SHARK')
+atlSharkT <- subset(tflOverlapTL, tflOverlapTL$species == 'ATLANTIC SHARPNOSE SHARK')
 t.test(aveLen~source, data = atlSharkT) ##can't run, too small of sample
 
-blackSharkT <- subset(tflOverlap, tflOverlap$species == 'BLACKTIP SHARK')
+blackSharkT <- subset(tflOverlapTL, tflOverlapTL$species == 'BLACKTIP SHARK')
 t.test(aveLen~source, data = blackSharkT) ##can't run, too small of sample
 
-bonnetT <- subset(tflOverlap, tflOverlap$species == 'BONNETHEAD')
+bonnetT <- subset(tflOverlapTL, tflOverlapTL$species == 'BONNETHEAD')
 #two weights missing
 t.test(aveLen~source, data = bonnetT) ##NS, small sample
-#t.test(aveWt~source, data = bonnetT) #borderline, p=0.0575, small sample
+t.test(aveWt~source, data = bonnetT) #borderline, p=0.0575, small sample
 
-crevalleT <- subset(tflOverlap, tflOverlap$species == 'CREVALLE JACK')
+crevalleT <- subset(tflOverlapTL, tflOverlapTL$species == 'CREVALLE JACK')
 t.test(aveLen~source, data = crevalleT) ##sign, p = 0.04437, low sample
 #missing weights
 #t.test(aveWt~source, data = crevalleT) ##NS, low sample
 
-flPompT <- subset(tflOverlap, tflOverlap$species == 'FLORIDA POMPANO')
+flPompT <- subset(tflOverlapTL, tflOverlapTL$species == 'FLORIDA POMPANO')
 #weights missing
 t.test(aveLen~source, data = flPompT) ##sign, p=0.02953
-#t.test(aveWt~source, data = flPompT) ##NS, p = 0.4473, low sample
+t.test(aveWt~source, data = flPompT) ##NS, p = 0.4473, low sample
 
 #some weird stuff going on with this one too
-floundT <- subset(tflOverlap, tflOverlap$species == 'GULF FLOUNDER')
+floundT <- subset(tflOverlapTL, tflOverlapTL$species == 'GULF FLOUNDER')
 t.test(aveLen~source, data = floundT) ##NS, small sample size (p=0.144)
 t.test(aveWt~source, data = floundT) #NS, small sample size (p=0.2014)
 
-redDrumT <- subset(tflOverlap, tflOverlap$species == 'RED DRUM')
+redDrumT <- subset(tflOverlapTL, tflOverlapTL$species == 'RED DRUM')
 t.test(aveLen~source, data = redDrumT) ##sign, p=-0.02384
 #weights missing
-#t.test(aveWt~source, data = redDrumT) #sign, p=0.04128
+t.test(aveWt~source, data = redDrumT) #sign, p=0.04128
 
-kingT <- subset(tflOverlap, tflOverlap$species == 'SOUTHERN KINGFISH')
+kingT <- subset(tflOverlapTL, tflOverlapTL$species == 'SOUTHERN KINGFISH')
 t.test(aveLen~source, data = kingT) ##NS, p=0.3186, low sample
-#t.test(aveWt~source, data = kingT) #sign, p=0.04468, low sample
+t.test(aveWt~source, data = kingT) #sign, p=0.02422, low sample
 
-mackT <- subset(tflOverlap, tflOverlap$species == 'SPANISH MACKEREL')
+mackT <- subset(tflOverlapTL, tflOverlapTL$species == 'SPANISH MACKEREL')
 t.test(aveLen~source, data = mackT) ##NS, close though, p=0.07758
 t.test(aveWt~source, data = mackT) #NS like almost exactly the same!
 
-seatroutT <- subset(tflOverlap, tflOverlap$species == 'SPOTTED SEATROUT')
+seatroutT <- subset(tflOverlapTL, tflOverlapTL$species == 'SPOTTED SEATROUT')
 t.test(aveLen~source, data = seatroutT) ## can't run, not enough observations
 t.test(aveWt~source, data = seatroutT) 
