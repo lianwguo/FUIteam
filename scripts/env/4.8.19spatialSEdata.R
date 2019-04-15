@@ -312,6 +312,7 @@ swLA50mi<- subset(LA50mi, LA50mi$spName == 'BLACK DRUM'|LA50mi$spName == 'BLACKF
                     LA50mi$spName == 'SHEEPSHEAD'|LA50mi$spName == 'SOUTHERN FLOUNDER'|
                     LA50mi$spName == 'SPOTTED SEATROUT'|LA50mi$spName == 'STRIPED BASS')
 nrow(swLA50mi)
+write.csv(swLA50mi, "~/FUIteam/PydioData/env/data_outputs/swLA50mi.csv")
 
 LA100mi <- rbind(sub100miLA141,sub100miLA150,sub100miLA151,sub100miLA155,
                 sub100miLA222,sub100miLA231,sub100miLA306,sub100miLA3325)
@@ -323,13 +324,15 @@ swLA100mi<- subset(LA100mi, LA100mi$spName == 'BLACK DRUM'|LA100mi$spName == 'BL
                     LA100mi$spName == 'RED DRUM'|LA100mi$spName == 'RED SNAPPER'|
                     LA100mi$spName == 'SHEEPSHEAD'|LA100mi$spName == 'SOUTHERN FLOUNDER'|
                     LA100mi$spName == 'SPOTTED SEATROUT'|LA100mi$spName == 'STRIPED BASS')
+nrow(swLA100mi)
+write.csv(swLA100mi, "~/FUIteam/PydioData/env/data_outputs/swLA100mi.csv")
 
 plot(loc_NOLA,
      col = "yellow",
      main = "TOP mrip and mercury sites")
 plot(loc_LA,
      add = TRUE)
-plot(LA100mi,
+plot(swLA100mi,
      pch = 4,
      cex = 1,
      col = "green",
@@ -339,3 +342,22 @@ plot(loc_LAmrip,
      cex = 1,
      col = 'blue',
      add = TRUE)
+
+dfLA50mi <- as.data.frame(swLA50mi)
+spLA50mi <- unique(dfLA50mi[c("spName", "mripSite")])
+write.csv(spLA50mi, "~/FUIteam/PydioData/env/data_outputs/spLA50mi.csv")
+
+dfLA100mi <- as.data.frame(swLA100mi)
+spLA100mi <- unique(dfLA100mi[c("spName", "mripSite")])
+write.csv(spLA100mi, "~/FUIteam/PydioData/env/data_outputs/spLA100mi.csv")
+
+library(dplyr)
+tibbLA50mi <- spLA50mi %>%
+  group_by(mripSite) %>%
+  summarise(n_distinct(spName))
+tibbLA100mi <- spLA100mi %>%
+  group_by(mripSite) %>%
+  summarise(n_distinct(spName))
+write.csv(tibbLA50mi, "~/FUIteam/PydioData/env/data_outputs/tibbLA50mi.csv")
+write.csv(tibbLA100mi, "~/FUIteam/PydioData/env/data_outputs/tibbLA100mi.csv")
+
