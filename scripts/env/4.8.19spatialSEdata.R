@@ -88,26 +88,125 @@ plot(loc_LAmrip,
 
 #going to try to calculate distances
 
-distLA <- spDists(loc_LAmerc, loc_LAmrip, longlat = FALSE) #in m
-distLA
+#sites in mrip
+#141  150  151  155  222  231  306 3325
 
-which(distLA < 8046.72) #within 5 miles #returns 37, 
-which(distLA < 16093.4) #within 10 miles #returns 105
-which(distLA < 40233.6) #within 25 miles #returns 3 sites, 44 observations
-which(distLA < 80467.2) #within 50 miles #returns 36 sites, 493 observations
-which(distLA < 160934.4) #within 100 miles #returns 100 sites, observations
+#141***
+distLA141 <- spDists(loc_LAmrip[1,], loc_LAmerc, longlat = FALSE) #in m
+distLA141
 
-Index50miLA <- which(distLA < 80467.2) #within 50 miles #returns 36 sites, 493 observations
-Index100miLA <- which(distLA < 160934.4) #within 100 miles #returns 100 sites, observations
+which(distLA141 < 8046.72) #within 5 miles #returns 37, 
+which(distLA141 < 16093.4) #within 10 miles #returns 105
+which(distLA141 < 40233.6) #within 25 miles #returns  sites, 28 observations
+which(distLA141 < 80467.2) #within 50 miles #returns  sites, 440 observations
+which(distLA141 < 160934.4) #within 100 miles #returns many observations
+
+Ind50miLA141 <- which(distLA141 < 80467.2) #within 50 miles, 32 sites
+Ind100miLA141 <- which(distLA141 < 160934.4) #within 100 miles
 
 #subset data using index
-sub50miLA <- loc_LAmerc[Index50miLA,]
-str(sub50miLA)
-unique(sub50miLA$Water.Body.Site)
-write.csv(subset25miHg222, "~/FUIteam/PydioData/env/data_outputs/subset25miHg222.csv")
-unique(subset25miHg222$CollectYear)
+sub50miLA141 <- loc_LAmerc[Ind50miLA141,]
+str(sub50miLA141)
+unique(sub50miLA141$SiteNum)
+unique(sub50miLA141$CollectYear) #2003, 2004, 2006-2009
 
-for (val in loc_LAmrip) {
-  if(val %% 2 == 0)  count = count+1
-}
-print(count)
+sub100miLA141 <- loc_LAmerc[Ind100miLA141,]
+str(sub100miLA141)
+unique(sub100miLA141$SiteNum) #128 sites
+unique(sub100miLA141$CollectYear) #2003-2009
+
+#150
+distLA150 <- spDists(loc_LAmrip[2,], loc_LAmerc, longlat = FALSE) #in m
+distLA150
+
+which(distLA150 < 8046.72) #within 5 miles
+which(distLA150 < 16093.4) #within 10 miles 
+which(distLA150 < 40233.6) #within 25 miles #returns  sites, 28 observations
+which(distLA150 < 80467.2) #within 50 miles #returns  sites, 440 observations
+which(distLA150 < 160934.4) #within 100 miles #returns many observations
+
+Ind50miLA150 <- which(distLA150 < 80467.2) #within 50 miles, 32 sites
+Ind100miLA150 <- which(distLA150 < 160934.4) #within 100 miles
+
+#subset data using index
+sub50miLA150 <- loc_LAmerc[Ind50miLA150,]
+str(sub50miLA150)
+unique(sub50miLA150$SiteNum)
+unique(sub50miLA150$CollectYear) #2003, 2004, 2006-2009
+
+sub100miLA150 <- loc_LAmerc[Ind100miLA150,]
+str(sub100miLA150)
+unique(sub100miLA150$SiteNum) #128 sites
+unique(sub100miLA150$CollectYear) #2003-2009
+
+#151
+distLA151 <- spDists(loc_LAmrip[3,], loc_LAmerc, longlat = FALSE) #in m
+distLA151
+
+which(distLA151 < 8046.72) #within 5 miles
+which(distLA151 < 16093.4) #within 10 miles 
+which(distLA151 < 40233.6) #within 25 miles #returns  sites, 28 observations
+which(distLA151 < 80467.2) #within 50 miles #returns  sites, 440 observations
+which(distLA151 < 160934.4) #within 100 miles #returns many observations
+
+Ind50miLA151 <- which(distLA151 < 80467.2) #within 50 miles, 32 sites
+Ind100miLA151 <- which(distLA151 < 160934.4) #within 100 miles
+
+#subset data using index
+sub50miLA151 <- loc_LAmerc[Ind50miLA151,]
+str(sub50miLA151)
+unique(sub50miLA151$SiteNum)
+unique(sub50miLA151$CollectYear) #2003, 2004, 2006-2009
+
+sub100miLA151 <- loc_LAmerc[Ind100miLA151,]
+str(sub100miLA151)
+unique(sub100miLA151$SiteNum) #128 sites
+unique(sub100miLA151$CollectYear) #2003-2009
+
+#155
+distLA155 <- spDists(loc_LAmrip[4,], loc_LAmerc, longlat = FALSE) #in m
+distLA155
+
+which(distLA155 < 8046.72) #within 5 miles, 17 sites
+which(distLA155 < 16093.4) #within 10 miles, same
+which(distLA155 < 40233.6) #within 25 miles #returns  sites, 230 observations
+which(distLA155 < 80467.2) #within 50 miles #returns  sites,many observations
+which(distLA155 < 160934.4) #within 100 miles #returns many observations
+
+Ind50miLA155 <- which(distLA155 < 80467.2) #within 50 miles, 32 sites
+Ind100miLA155 <- which(distLA155 < 160934.4) #within 100 miles
+
+#subset data using index
+sub50miLA155 <- loc_LAmerc[Ind50miLA155,]
+str(sub50miLA155)
+unique(sub50miLA155$SiteNum)
+unique(sub50miLA155$CollectYear) #2003-2009
+
+sub100miLA155 <- loc_LAmerc[Ind100miLA155,]
+str(sub100miLA155)
+unique(sub100miLA155$SiteNum) #128 sites
+unique(sub100miLA155$CollectYear) #2003-2010
+
+#222
+distLA222 <- spDists(loc_LAmrip[4,], loc_LAmerc, longlat = FALSE) #in m
+distLA222
+
+which(distLA222 < 8046.72) #within 5 miles, 17 sites
+which(distLA222 < 16093.4) #within 10 miles, same
+which(distLA222 < 40233.6) #within 25 miles #returns  sites, 230 observations
+which(distLA222 < 80467.2) #within 50 miles #returns  sites,many observations
+which(distLA222 < 160934.4) #within 100 miles #returns many observations
+
+Ind50miLA222 <- which(distLA222 < 80467.2) #within 50 miles, 32 sites
+Ind100miLA222 <- which(distLA222 < 160934.4) #within 100 miles
+
+#subset data using index
+sub50miLA222 <- loc_LAmerc[Ind50miLA222,]
+str(sub50miLA222)
+unique(sub50miLA222$SiteNum)
+unique(sub50miLA222$CollectYear) #2003-2009
+
+sub100miLA222 <- loc_LAmerc[Ind100miLA222,]
+str(sub100miLA222)
+unique(sub100miLA222$SiteNum) #128 sites
+unique(sub100miLA222$CollectYear) #2003-2010
