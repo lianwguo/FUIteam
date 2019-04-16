@@ -713,3 +713,70 @@ tibbFL100mi <- spFL100mi %>%
   summarise(n_distinct(Species))
 write.csv(tibbFL50mi, "~/FUIteam/PydioData/env/data_outputs/tibbFL50mi.csv")
 write.csv(tibbFL100mi, "~/FUIteam/PydioData/env/data_outputs/tibbFL100mi.csv")
+
+#get landings data to compare species tested and landed
+landings <- read.csv(file.path("~/FUIteam/PydioData/env/raw/", "mripLandings.csv"), 
+                    stringsAsFactors = FALSE)
+spList <- read.csv(file.path("~/FUIteam/PydioData/MRIP/raw/MRIP_support_docs/", "species_list.csv"), 
+                   stringsAsFactors = FALSE)
+str(landings)
+str(spList)
+
+spLandings <- merge(x = landings, y = spList[ , c("sp_code","COMMON_NAME", 
+                 "SCIENTIFIC_NAME","NODC_ORDER")], by.x = "SP_CODE", 
+                  by.y = "sp_code", all.x = TRUE)
+
+str(spLandings)
+unique(spLandings$COMMON_NAME)
+tail(spLandings)
+spLandings[20000:21000,]
+
+#these include multiple states. need to go back and redo.
+topsites <- subset(spLandings, spLandings$INTSITE == '141'| spLandings$INTSITE == '150'|
+                     spLandings$INTSITE == '151'|spLandings$INTSITE == '155'|spLandings$INTSITE == '222'|
+                     spLandings$INTSITE == '231'|spLandings$INTSITE == '306'|spLandings$INTSITE == '3325'|
+                     spLandings$INTSITE == '241'|spLandings$INTSITE == '544'|spLandings$INTSITE == '615'|
+                     spLandings$INTSITE == '632'|spLandings$INTSITE == '712'|spLandings$INTSITE == '742'|
+                     spLandings$INTSITE == '769'|spLandings$INTSITE == '770')
+
+allLandings <- read.csv(file.path("~/FUIteam/PydioData/env/raw/", "FullMRIPlandings.csv"), 
+                     stringsAsFactors = FALSE)
+nrow(allLandings)
+
+#subset for states (FL is 12, LA is 22)
+caseLandings <- subset(allLandings, allLandings$ST == '12'|allLandings$ST == '22')
+nrow(caseLandings)
+
+#subset for top sites (all listed below)
+topSites <- subset(caseLandings, caseLandings$INTSITE == '141'| caseLandings$INTSITE == '150'|
+                     caseLandings$INTSITE == '151'|caseLandings$INTSITE == '155'|caseLandings$INTSITE == '222'|
+                     caseLandings$INTSITE == '231'|caseLandings$INTSITE == '306'|caseLandings$INTSITE == '3325'|
+                     caseLandings$INTSITE == '241'|caseLandings$INTSITE == '544'|caseLandings$INTSITE == '615'|
+                     caseLandings$INTSITE == '632'|caseLandings$INTSITE == '712'|caseLandings$INTSITE == '742'|
+                     caseLandings$INTSITE == '769'|caseLandings$INTSITE == '770')
+nrow(topSites)
+str(topSites)
+cleanSites <- topSites[,c('ID_CODE','YEAR','ST','SP_CODE','CLAIM','HARVEST','wgt_ab1',
+                          'tot_len','ST_RES','CNTY_RES','INTSITE','ZIP')]
+str(cleanSites)
+cleanSites$Landing <- cleanSites$CLAIM + cleanSites$HARVEST
+
+#remerge the species
+spLandings <- merge(x = cleanSites, y = spList[ , c("sp_code","COMMON_NAME", 
+                    "SCIENTIFIC_NAME","NODC_ORDER")], by.x = "SP_CODE", 
+                    by.y = "sp_code", all.x = TRUE)
+str(spLandings)
+nrow(spLandings)
+
+#timeframe of interest is 2007 - 2011 (acs data)
+timeLandings <- subset(spLandings, spLandings$YEAR == 2007|spLandings$YEAR == 2008|
+                         spLandings$YEAR == 2009|spLandings$YEAR == 2010|spLandings$YEAR == 2011)
+nrow(timeLandings)
+str(timeLandings)
+
+tibbSP <- timeLandings %>%
+  group_by(INTSITE, COMMON_NAME) %>%
+  summarise(land = sum(Landing))
+
+tibbSPb <- subset(tibbSP, tibbSP$land > 0)
+write.csv(tibbSPb, "~/FUIteam/PydioData/env/data_outputs/tibbSP.csv")
