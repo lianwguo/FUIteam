@@ -742,6 +742,9 @@ topsites <- subset(spLandings, spLandings$INTSITE == '141'| spLandings$INTSITE =
 allLandings <- read.csv(file.path("~/FUIteam/PydioData/env/raw/", "FullMRIPlandings.csv"), 
                      stringsAsFactors = FALSE)
 nrow(allLandings)
+unique(allLandings$MODE_FX)
+unique(allLandings$INTSITE)
+#new sites - fort de soto. 3799 3800 3802
 
 #subset for states (FL is 12, LA is 22)
 caseLandings <- subset(allLandings, allLandings$ST == '12'|allLandings$ST == '22')

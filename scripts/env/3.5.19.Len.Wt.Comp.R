@@ -26,7 +26,7 @@ ggplot(nolaOverlap, aes(x=aveWt, color=source)) +
   facet_wrap(~ facet) 
 
 ## aveWt was saved as a character before. nolaOverlap$aveWt <- as.numeric(nolaOverlap$aveWt)
-
+tail(nolaOverlap)
 #new column for reordering facet wrap
 nolaOverlap$facet = factor(nolaOverlap$species, levels = c("BLACK DRUM", "GRAY SNAPPER", 
                                                            "RED DRUM", "SHEEPSHEAD", "SOUTHERN FLOUNDER",
@@ -44,16 +44,19 @@ tflOverlap <- subset(sizeComp, sizeComp$caseStudy == 'TFL' & sizeComp$species ==
                        sizeComp$caseStudy == 'TFL' & sizeComp$species == 'SPANISH MACKEREL' | 
                        sizeComp$caseStudy == 'TFL' & sizeComp$species == 'SPOTTED SEATROUT')
 str(tflOverlap)
+tail(tflOverlap)
 tflOverlap$aveWt <- as.numeric(tflOverlap$aveWt)
 write.csv(tflOverlap, "~/FUIteam/PydioData/env/data_outputs/tflOverlap.csv")
 
 tflOverlapTL <- read.csv(file.path("~/FUIteam/PydioData/env/data_outputs/", "tflOverlapTL.csv"))
+tail(tflOverlapTL)
+str(tflOverlapTL)
 #new column for reordering facet wrap
-tflOverlapTL$facet = factor(tflOverlap$species, levels = c("ATLANTIC SHARPNOSE SHARK", "BLACKTIP SHARK", 
-                                                           "BONNETHEAD", "CREVALLE JACK", 
-                                                         "FLORIDA POMPANO", "GULF FLOUNDER","RED DRUM",
-                                                         "SOUTHERN KINGFISH", "SPANISH MACKEREL",
-                                                         "SPOTTED SEATROUT"))
+#tflOverlapTL$facet = factor(tflOverlap$species, levels = c("ATLANTIC SHARPNOSE SHARK", "BLACKTIP SHARK", 
+#                                                           "BONNETHEAD", "CREVALLE JACK", 
+#                                                         "FLORIDA POMPANO", "GULF FLOUNDER","RED DRUM",
+#                                                         "SOUTHERN KINGFISH", "SPANISH MACKEREL",
+#                                                         "SPOTTED SEATROUT"), order)
 
 # FLORIDA histograms
 ggplot(tflOverlap, aes(x=aveLen, color=source)) +
@@ -87,7 +90,7 @@ boxplot(aveLen ~ source*species,
         col=c("white","lightgray"), ylim = c(0, 100), tflOverlap)
 boxplot(aveWt ~ source*species,
         col=c("white","lightgray"), ylim = c(0, 6000), tflOverlap)
-p<- ggplot(tflOverlap, aes(x=species, y=aveLen, col = source)) + 
+p<- ggplot(tflOverlapTL, aes(x=species, y=aveLen, col = source)) + 
   geom_boxplot() + 
   coord_cartesian(ylim = c(0, 100)) 
 p + theme(axis.text.x=element_text(angle=90, hjust=1))
@@ -136,6 +139,7 @@ ggplot(seatroutT,aes(x=source, y=aveWt)) +
   geom_point()
 crevalleT
 
+tail(tflOverlapTL)
 atlSharkT <- subset(tflOverlapTL, tflOverlapTL$species == 'ATLANTIC SHARPNOSE SHARK')
 t.test(aveLen~source, data = atlSharkT) ##can't run, too small of sample
 
@@ -178,3 +182,44 @@ t.test(aveWt~source, data = mackT) #NS like almost exactly the same!
 seatroutT <- subset(tflOverlapTL, tflOverlapTL$species == 'SPOTTED SEATROUT')
 t.test(aveLen~source, data = seatroutT) ## can't run, not enough observations
 t.test(aveWt~source, data = seatroutT) 
+
+
+### merging to look at trophic level and sediment/benthic codes between tested/landed sp
+
+lhKey <- read.csv(file.path("~/FUIteam/PydioData/env/raw/","lhKey.csv"))
+str(lhKey)
+lhKey[,1] <- NULL
+
+str(tflOverlapTL)
+tail(tflOverlapTL)
+
+tflOverlapTL$species <- as.character(tflOverlapTL$species)
+nolaOverlap$species <- as.character(nolaOverlap$species)
+lhKey$Common.Name <- as.character(lhKey$Common.Name)
+
+tflLH <- left_join(tflOverlapTL, lhKey, by = c("species" = "Common.Name"))
+tail(tflLH)
+
+ggplot(tflLH,aes(x=source, y=trophicCode, color=source)) +
+  geom_boxplot()
+ggplot(tflLH,aes(x=source, y=Avg.size..cm., color=source)) +
+  geom_boxplot()
+ggplot(tflLH,aes(x=source, y=benthCode, color=source)) +
+  geom_point()
+ggplot(tflLH,aes(x=source, y=sedCode, color=source)) +
+  geom_point()
+
+
+tail(nolaOverlap)
+
+nolaLH <- left_join(nolaOverlap, lhKey, by = c("species" = "Common.Name"))
+tail(nolaLH)
+
+ggplot(nolaLH,aes(x=source, y=trophicCode, color=source)) +
+  geom_boxplot()
+ggplot(nolaLH,aes(x=source, y=Avg.size..cm., color=source)) +
+  geom_boxplot()
+ggplot(nolaLH,aes(x=source, y=benthCode, color=source)) +
+  geom_point()
+ggplot(nolaLH,aes(x=source, y=sedCode, color=source)) +
+  geom_point()
