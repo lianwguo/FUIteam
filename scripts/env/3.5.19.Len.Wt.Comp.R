@@ -209,6 +209,8 @@ ggplot(tflLH,aes(x=source, y=benthCode, color=source)) +
 ggplot(tflLH,aes(x=source, y=sedCode, color=source)) +
   geom_point()
 
+t.test(trophicCode ~ source, data = tflLH) # t = -6.1542, df = 321.92, p-value = 2.241e-09
+t.test(Avg.size..cm. ~ source, data = tflLH) # t = 9.1161, df = 296.85, p-value < 2.2e-16
 
 tail(nolaOverlap)
 
@@ -223,3 +225,6 @@ ggplot(nolaLH,aes(x=source, y=benthCode, color=source)) +
   geom_point()
 ggplot(nolaLH,aes(x=source, y=sedCode, color=source)) +
   geom_point()
+
+t.test(trophicCode ~ source, data = nolaLH) # NOT SIG
+t.test(Avg.size..cm. ~ source, data = nolaLH) # t = 4.5307, df = 268.55, p-value = 8.855e-06
