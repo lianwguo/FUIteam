@@ -1,7 +1,7 @@
 
 
 #============================================================
-# Function to rank annual top fishing sites in FLorida and Louisiana 
+# Function to rank annual top fishing sites in Forida and Louisiana 
 #============================================================
 rankSites <- function(yearVec,harvestType,stateFipCode, howMany,catchDat,tripDat) {
 
@@ -230,6 +230,7 @@ zipSitesLanding <- function(yearVec, harvestType,howMany,state, datCatch, datTri
 
 	return(MergedDatOrg)
 }
+
 
 
 
