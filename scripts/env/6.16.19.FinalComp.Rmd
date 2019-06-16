@@ -120,6 +120,100 @@ mripLAb <- landOtimB %>%
 mripLAb
 
 ```
+Try to indicate which entries are tested in mrip
+
+```{r}
+str(landOtimA)
+str(mercLA25miA)
+unique(mercLA25miA$spName)
+
+#top sites = 222, 231, 306, 155, 151, within 25 mi
+unique(mercLA25miA$INTSITE)
+unique(landOtimA$INTSITE)
+O222a25 <- subset(mercLA25miA,mercLA25miA$INTSITE == '222')
+O231a25 <- subset(mercLA25miA,mercLA25miA$INTSITE == '231')
+O306a25 <- subset(mercLA25miA,mercLA25miA$INTSITE == '306')
+O155a25 <- subset(mercLA25miA,mercLA25miA$INTSITE == '155')
+O151a25 <- subset(mercLA25miA,mercLA25miA$INTSITE == '151')
+
+indLA25a222 <- which((landOtimA$common %in% O222a25$spName) & (landOtimA$INTSITE == '222'))
+str(indLA25a222)
+landOtimA[indLA25a222,]
+
+landOtimA$testStatus25mi <- rep('NA', nrow(landOtimA))
+landOtimA$testStatus25mi[indLA25a222] <- 'Tested'
+
+indLA25a231 <- which((landOtimA$common %in% O231a25$spName) & (landOtimA$INTSITE == '231'))
+str(indLA25a231)
+landOtimA[indLA25a231,]
+landOtimA$testStatus25mi[indLA25a231] <- 'Tested'
+
+indLA25a306 <- which((landOtimA$common %in% O306a25$spName) & (landOtimA$INTSITE == '306'))
+str(indLA25a306)
+landOtimA[indLA25a306,]
+landOtimA$testStatus25mi[indLA25a306] <- 'Tested'
+
+indLA25a155 <- which((landOtimA$common %in% O155a25$spName) & (landOtimA$INTSITE == '155'))
+str(indLA25a155)
+landOtimA[indLA25a155,]
+landOtimA$testStatus25mi[indLA25a155] <- 'Tested'
+
+indLA25a151 <- which((landOtimA$common %in% O151a25$spName) & (landOtimA$INTSITE == '151'))
+str(indLA25a151)
+landOtimA[indLA25a151,]
+landOtimA$testStatus25mi[indLA25a151] <- 'Tested'
+
+landOtimA$testStatus25mi[landOtimA$testStatus25mi %in% 'NA'] <- 'Not Tested'
+
+#top sites = 222, 231, 306, 155, 151, within 100 mi
+unique(mercLA100miA$INTSITE)
+unique(mercLA100miA$spName)
+unique(landOtimA$INTSITE)
+O222a100 <- subset(mercLA100miA,mercLA100miA$INTSITE == '222')
+O231a100 <- subset(mercLA100miA,mercLA100miA$INTSITE == '231')
+O306a100 <- subset(mercLA100miA,mercLA100miA$INTSITE == '306')
+O155a100 <- subset(mercLA100miA,mercLA100miA$INTSITE == '155')
+O151a100 <- subset(mercLA100miA,mercLA100miA$INTSITE == '151')
+
+indLA100a222 <- which((landOtimA$common %in% O222a100$spName) & (landOtimA$INTSITE == '222'))
+str(indLA100a222)
+landOtimA[indLA100a222,]
+
+landOtimA$testStatus100mi <- rep('NA', nrow(landOtimA))
+landOtimA$testStatus100mi[indLA100a222] <- 'Tested'
+
+indLA100a231 <- which((landOtimA$common %in% O231a100$spName) & (landOtimA$INTSITE == '231'))
+str(indLA100a231)
+landOtimA[indLA100a231,]
+landOtimA$testStatus100mi[indLA100a231] <- 'Tested'
+
+indLA100a306 <- which((landOtimA$common %in% O306a100$spName) & (landOtimA$INTSITE == '306'))
+str(indLA100a306)
+landOtimA[indLA100a306,]
+landOtimA$testStatus100mi[indLA100a306] <- 'Tested'
+
+indLA100a155 <- which((landOtimA$common %in% O155a100$spName) & (landOtimA$INTSITE == '155'))
+str(indLA100a155)
+landOtimA[indLA100a155,]
+landOtimA$testStatus100mi[indLA100a155] <- 'Tested'
+
+indLA100a151 <- which((landOtimA$common %in% O151a100$spName) & (landOtimA$INTSITE == '151'))
+str(indLA100a151)
+landOtimA[indLA100a151,]
+landOtimA$testStatus100mi[indLA100a151] <- 'Tested'
+
+landOtimA$testStatus100mi[landOtimA$testStatus100mi %in% 'NA'] <- 'Not Tested'
+
+landOtimA
+
+LAaProp25mi <- landOtimA %>%
+  group_by(INTSITE, testStatus25mi) %>%
+  summarise(n_distinct(common), landings = sum(landing), biomass = sum(wgt_ab1))
+
+LAaProp100mi <- landOtimA %>%
+  group_by(INTSITE, testStatus100mi) %>%
+  summarise(n_distinct(common), landings = sum(landing), biomass = sum(wgt_ab1))
+```
 
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
