@@ -1,0 +1,129 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+#mercury data frames
+DFfl25miA <- as.data.frame(fl25miA)
+DFfl100miA <- as.data.frame(fl100miA)
+DFfl25miB <- as.data.frame(fl25miB)
+DFfl100miB <- as.data.frame(fl100miB)
+DFla25miA <- as.data.frame(la25miAsw)
+DFla100miA <- as.data.frame(la100miAsw)
+DFla25miBA <- as.data.frame(la25miBAsw)
+DFla100miBA <- as.data.frame(la100miBAsw)
+
+#relevant mrip data
+landOtimA
+landOtimB
+landTtimA
+landTtimB
+
+```{r}
+#isolate species, biomass, landings, per site - FLorida
+
+DFfl25miA$Whole_weight <- as.numeric(DFfl25miA$Whole_weight)
+DFfl25miA$TL <- as.numeric(DFfl25miA$TL)
+
+str(DFfl25miA)
+
+mercFL25miA <- DFfl25miA %>% 
+  group_by(INTSITE,Species) %>% 
+  summarise(n = n(), aveWt = mean(Whole_weight, na.rm = TRUE), 
+            aveLt = mean(TL, na.rm = TRUE), aveHg = mean(Hg, na.rm = TRUE))
+
+mercFL25miA 
+
+DFfl100miA$Whole_weight <- as.numeric(DFfl100miA$Whole_weight)
+DFfl100miA$TL <- as.numeric(DFfl100miA$TL)
+
+mercFL100miA <- DFfl100miA %>% 
+  group_by(INTSITE,Species) %>% 
+  summarise(n = n(), aveWt = mean(Whole_weight, na.rm = TRUE), 
+            aveLt = mean(TL, na.rm = TRUE), aveHg = mean(Hg, na.rm = TRUE))
+
+mercFL100miA 
+
+DFfl25miB$Whole_weight <- as.numeric(DFfl25miB$Whole_weight)
+DFfl25miB$TL <- as.numeric(DFfl25miB$TL)
+
+mercFL25miB <- DFfl25miB %>% 
+  group_by(INTSITE,Species) %>% 
+  summarise(n = n(), aveWt = mean(Whole_weight, na.rm = TRUE), 
+            aveLt = mean(TL, na.rm = TRUE), aveHg = mean(Hg, na.rm = TRUE))
+
+mercFL25miB 
+
+DFfl100miB$Whole_weight <- as.numeric(DFfl100miB$Whole_weight)
+DFfl100miB$TL <- as.numeric(DFfl100miB$TL)
+
+mercFL100miB <- DFfl100miB %>% 
+  group_by(INTSITE,Species) %>% 
+  summarise(n = n(), aveWt = mean(Whole_weight, na.rm = TRUE), 
+            aveLt = mean(TL, na.rm = TRUE), aveHg = mean(Hg, na.rm = TRUE))
+
+mercFL100miB 
+
+#MRIP
+landTtimA
+landTtimB
+
+mripFLa <- landTtimA %>% 
+  group_by(INTSITE,common) %>% 
+  summarise(n = n(), landings = sum(landing), biomass = sum(wgt_ab1, na.rm = TRUE))
+mripFLa
+
+mripFLb <- landTtimB %>% 
+  group_by(INTSITE,common) %>% 
+  summarise(n = n(), landings = sum(landing), biomass = sum(wgt_ab1, na.rm = TRUE))
+mripFLb
+```
+
+Add in NOLA
+
+```{r}
+str(DFla25miA)
+
+mercLA25miA <- DFla25miA %>% 
+  group_by(INTSITE,spName) %>% 
+  summarise(n = n(), aveWt = mean(aveWt_g, na.rm = TRUE), 
+            aveLt = mean(aveLen_cm, na.rm = TRUE), aveHg = mean(HgResult, na.rm = TRUE))
+mercLA25miA 
+
+mercLA100miA <- DFla100miA %>% 
+  group_by(INTSITE,spName) %>% 
+  summarise(n = n(), aveWt = mean(aveWt_g, na.rm = TRUE), 
+            aveLt = mean(aveLen_cm, na.rm = TRUE), aveHg = mean(HgResult, na.rm = TRUE))
+mercLA100miA 
+
+mercLA25miBA <- DFla25miBA %>% 
+  group_by(INTSITE,spName) %>% 
+  summarise(n = n(), aveWt = mean(aveWt_g, na.rm = TRUE), 
+            aveLt = mean(aveLen_cm, na.rm = TRUE), aveHg = mean(HgResult, na.rm = TRUE))
+mercLA25miBA 
+
+mercLA100miBA <- DFla100miBA %>% 
+  group_by(INTSITE,spName) %>% 
+  summarise(n = n(), aveWt = mean(aveWt_g, na.rm = TRUE), 
+            aveLt = mean(aveLen_cm, na.rm = TRUE), aveHg = mean(HgResult, na.rm = TRUE))
+mercLA100miBA 
+
+#MRIP
+mripLAa <- landOtimA %>% 
+  group_by(INTSITE,common) %>% 
+  summarise(n = n(), landings = sum(landing), biomass = sum(wgt_ab1, na.rm = TRUE))
+mripLAa
+
+mripLAb <- landOtimB %>% 
+  group_by(INTSITE,common) %>% 
+  summarise(n = n(), landings = sum(landing), biomass = sum(wgt_ab1, na.rm = TRUE))
+mripLAb
+
+```
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

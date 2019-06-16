@@ -790,3 +790,21 @@ fl100miA <- rbind(FL770a_100mi, FL769a_100mi, FL632a_100mi, FL615a_100mi, FL742a
 fl25miB <- rbind(FL770b_25mi, FL632b_25mi, FL3802b_25mi, FL769b_25mi, FL614b_25mi)
 fl100miB <- rbind(FL770b_100mi, FL632b_100mi, FL3802b_100mi, FL769b_100mi, FL614b_100mi)
 ###
+
+#mercury data frames
+DFfl25miA <- as.data.frame(fl25miA)
+DFfl100miA <- as.data.frame(fl100miA)
+DFfl25miB <- as.data.frame(fl25miB)
+DFfl100miB <- as.data.frame(fl100miB)
+DFla25miA <- as.data.frame(la25miAsw)
+DFla100miA <- as.data.frame(la100miAsw)
+DFla25miBA <- as.data.frame(la25miBAsw)
+DFla100miBA <- as.data.frame(la100miBAsw)
+
+#relevant mrip data
+landOtimA
+landOtimB
+landTtimA
+landTtimB
+
+
