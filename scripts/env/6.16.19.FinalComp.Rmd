@@ -213,7 +213,741 @@ LAaProp25mi <- landOtimA %>%
 LAaProp100mi <- landOtimA %>%
   group_by(INTSITE, testStatus100mi) %>%
   summarise(n_distinct(common), landings = sum(landing), biomass = sum(wgt_ab1))
+
+write.csv(LAaProp25mi, "~/FUIteam/PydioData/env/data_outputs/LAaProp25mi.csv")
+write.csv(LAaProp100mi, "~/FUIteam/PydioData/env/data_outputs/LAaProp100mi.csv")
 ```
+
+New Orleans Time Chunk B
+
+```{r}
+str(landOtimB)
+str(mercLA25miBA)
+unique(mercLA25miBA$spName)
+str(mercLA25miA)
+str(mercLA100miA)
+unique(mercLA25miBA$spName)
+unique(mercLA100miBA$spName)
+unique(landOtimB$common)
+
+#top sites = 222, 159, 306, 3325, 151, within 25 mi
+unique(mercLA25miBA$INTSITE)
+unique(landOtimB$INTSITE)
+O222ba25 <- subset(mercLA25miBA,mercLA25miBA$INTSITE == '222ba')
+O3325ba25 <- subset(mercLA25miBA,mercLA25miBA$INTSITE == '3325ba')
+O306ba25 <- subset(mercLA25miBA,mercLA25miBA$INTSITE == '306ba')
+O159ba25 <- subset(mercLA25miBA,mercLA25miBA$INTSITE == '159ba')
+O151ba25 <- subset(mercLA25miBA,mercLA25miBA$INTSITE == '151ba')
+
+indLA25b222 <- which((landOtimB$common %in% O222ba25$spName) & (landOtimB$INTSITE == '222'))
+str(indLA25b222)
+landOtimB[indLA25b222,]
+
+landOtimB$testStatus25mi <- rep('NA', nrow(landOtimB))
+landOtimB$testStatus25mi[indLA25b222] <- 'Tested'
+
+subset(landOtimB, landOtimB$INTSITE == '3325')
+indLA25b3325 <- which((landOtimB$common %in% O3325ba25$spName) & (landOtimB$INTSITE == '3325'))
+str(indLA25b3325)
+landOtimB[indLA25b3325,]
+landOtimB$testStatus25mi[indLA25b3325] <- 'Tested'
+
+indLA25b306 <- which((landOtimB$common %in% O306ba25$spName) & (landOtimB$INTSITE == '306'))
+str(indLA25b306)
+landOtimB[indLA25b306,]
+landOtimB$testStatus25mi[indLA25b306] <- 'Tested'
+
+indLA25b159 <- which((landOtimB$common %in% O159ba25$spName) & (landOtimB$INTSITE == '159'))
+str(indLA25b159)
+landOtimB[indLA25b159,]
+landOtimB$testStatus25mi[indLA25b159] <- 'Tested'
+
+indLA25b151 <- which((landOtimB$common %in% O151ba25$spName) & (landOtimB$INTSITE == '151'))
+str(indLA25b151)
+landOtimB[indLA25b151,]
+landOtimB$testStatus25mi[indLA25b151] <- 'Tested'
+
+landOtimB$testStatus25mi[landOtimB$testStatus25mi %in% 'NA'] <- 'Not Tested'
+
+#top sites = 222, 159, 306, 3325, 151, within 100 mi
+unique(mercLA100miBA$INTSITE)
+str(mercLA25miBA)
+unique(mercLA100miBA$spName)
+unique(landOtimB$INTSITE)
+
+O222ba100 <- subset(mercLA100miBA,mercLA100miBA$INTSITE == '222ba')
+O3325ba100 <- subset(mercLA100miBA,mercLA100miBA$INTSITE == '3325ba')
+O306ba100 <- subset(mercLA100miBA,mercLA100miBA$INTSITE == '306ba')
+O159ba100 <- subset(mercLA100miBA,mercLA100miBA$INTSITE == '159ba')
+O151ba100 <- subset(mercLA100miBA,mercLA100miBA$INTSITE == '151ba')
+
+indLA100b222 <- which((landOtimB$common %in% O222ba100$spName) & (landOtimB$INTSITE == '222'))
+str(indLA100b222)
+landOtimB[indLA100b222,]
+
+landOtimB$testStatus100mi <- rep('NA', nrow(landOtimB))
+landOtimB$testStatus100mi[indLA100b222] <- 'Tested'
+
+subset(landOtimB, landOtimB$INTSITE == '3325')
+indLA100b3325 <- which((landOtimB$common %in% O3325ba100$spName) & (landOtimB$INTSITE == '3325'))
+str(indLA100b3325)
+landOtimB[indLA100b3325,]
+landOtimB$testStatus100mi[indLA100b3325] <- 'Tested'
+
+indLA100b306 <- which((landOtimB$common %in% O306ba100$spName) & (landOtimB$INTSITE == '306'))
+str(indLA100b306)
+landOtimB[indLA100b306,]
+landOtimB$testStatus100mi[indLA100b306] <- 'Tested'
+
+indLA100b159 <- which((landOtimB$common %in% O159ba100$spName) & (landOtimB$INTSITE == '159'))
+str(indLA100b159)
+landOtimB[indLA100b159,]
+landOtimB$testStatus100mi[indLA100b159] <- 'Tested'
+
+indLA100b151 <- which((landOtimB$common %in% O151ba100$spName) & (landOtimB$INTSITE == '151'))
+str(indLA100b151)
+landOtimB[indLA100b151,]
+landOtimB$testStatus100mi[indLA100b151] <- 'Tested'
+
+landOtimB$testStatus100mi[landOtimB$testStatus100mi %in% 'NA'] <- 'Not Tested'
+
+unique(landOtimB$testStatus100mi)
+
+LAbaProp25mi <- landOtimB %>%
+  group_by(INTSITE, testStatus25mi) %>%
+  summarise(n_distinct(common), landings = sum(landing), biomass = sum(wgt_ab1))
+
+LAbaProp100mi <- landOtimB %>%
+  group_by(INTSITE, testStatus100mi) %>%
+  summarise(n_distinct(common), landings = sum(landing), biomass = sum(wgt_ab1))
+
+write.csv(LAbaProp25mi, "~/FUIteam/PydioData/env/data_outputs/LAbaProp25mi.csv")
+write.csv(LAbaProp100mi, "~/FUIteam/PydioData/env/data_outputs/LAbaProp100mi.csv")
+```
+
+Now onto Florida
+
+```{r}
+str(landTtimA)
+str(mercFL25miA)
+str(mercFL100miA)
+unique(mercFL25miA$Species)
+unique(mercFL100miA$Species)
+
+#need to convert lower case to upper case for the two dataframes to be able search properly
+mercFL25miA$Species <- toupper(mercFL25miA$Species)
+mercFL25miA$Species <- trimws(mercFL25miA$Species, which = c("right"), whitespace = "[ \t\r\n]")
+
+mercFL100miA$Species <- toupper(mercFL100miA$Species)
+mercFL100miA$Species <- trimws(mercFL100miA$Species, which = c("right"), whitespace = "[ \t\r\n]")
+
+#edit COMMON SNOOK in MRIP data to read SNOOK so they match
+landTtimA$common <- gsub("COMMON SNOOK", "SNOOK", landTtimA$common)
+
+#top sites = 770, 769, 632, 615, 742, within 25 mi
+unique(mercFL25miA$INTSITE)
+unique(landTtimA$INTSITE)
+T615a25 <- subset(mercFL25miA,mercFL25miA$INTSITE == '615')
+T632a25 <- subset(mercFL25miA,mercFL25miA$INTSITE == '632')
+T742a25 <- subset(mercFL25miA,mercFL25miA$INTSITE == '742')
+T769a25 <- subset(mercFL25miA,mercFL25miA$INTSITE == '769')
+T770a25 <- subset(mercFL25miA,mercFL25miA$INTSITE == '770')
+
+indFL25a615 <- which((landTtimA$common %in% T615a25$Species) & (landTtimA$INTSITE == '615'))
+str(indFL25a615)
+landTtimA[indFL25a615,]
+unique(indFL25a615$Common)
+unique((subset(landTtimA,landTtimA$INTSITE == '615'))$common)
+unique(T615a25$Species)
+
+landTtimA$testStatus25mi <- rep('NA', nrow(landTtimA))
+landTtimA$testStatus25mi[indFL25a615] <- 'Tested'
+
+indFL25a632 <- which((landTtimA$common %in% T632a25$Species) & (landTtimA$INTSITE == '632'))
+str(indFL25a632)
+landTtimA[indFL25a632,]
+unique(T632a25$Species)
+landTtimA$testStatus25mi[indFL25a632] <- 'Tested'
+
+indFL25a742 <- which((landTtimA$common %in% T742a25$Species) & (landTtimA$INTSITE == '742'))
+str(indFL25a742)
+landTtimA[indFL25a742,]
+landTtimA$testStatus25mi[indFL25a742] <- 'Tested'
+
+indFL25a769 <- which((landTtimA$common %in% T769a25$Species) & (landTtimA$INTSITE == '769'))
+str(indFL25a769)
+landTtimA[indFL25a769,]
+landTtimA$testStatus25mi[indFL25a769] <- 'Tested'
+
+indFL25a770 <- which((landTtimA$common %in% T770a25$Species) & (landTtimA$INTSITE == '770'))
+str(indFL25a770)
+landTtimA[indFL25a770,]
+landTtimA$testStatus25mi[indFL25a770] <- 'Tested'
+
+landTtimA$testStatus25mi[landTtimA$testStatus25mi %in% 'NA'] <- 'Not Tested'
+```
+
+100 mi chunk for FL, time frame A
+
+```{r}
+#top sites = 770, 769, 632, 615, 742, within 100 mi
+unique(mercFL100miA$INTSITE)
+unique(landTtimA$INTSITE)
+T615a100 <- subset(mercFL100miA,mercFL100miA$INTSITE == '615')
+T632a100 <- subset(mercFL100miA,mercFL100miA$INTSITE == '632')
+T742a100 <- subset(mercFL100miA,mercFL100miA$INTSITE == '742')
+T769a100 <- subset(mercFL100miA,mercFL100miA$INTSITE == '769')
+T770a100 <- subset(mercFL100miA,mercFL100miA$INTSITE == '770')
+
+indFL100a615 <- which((landTtimA$common %in% T615a100$Species) & (landTtimA$INTSITE == '615'))
+str(indFL100a615)
+landTtimA[indFL100a615,]
+unique((subset(landTtimA,landTtimA$INTSITE == '615'))$common)
+unique(T615a100$Species)
+
+landTtimA$testStatus100mi <- rep('NA', nrow(landTtimA))
+landTtimA$testStatus100mi[indFL100a615] <- 'Tested'
+
+indFL100a632 <- which((landTtimA$common %in% T632a100$Species) & (landTtimA$INTSITE == '632'))
+str(indFL100a632)
+landTtimA[indFL100a632,]
+unique(T632a100$Species)
+landTtimA$testStatus100mi[indFL100a632] <- 'Tested'
+
+indFL100a742 <- which((landTtimA$common %in% T742a100$Species) & (landTtimA$INTSITE == '742'))
+str(indFL100a742)
+landTtimA[indFL100a742,]
+landTtimA$testStatus100mi[indFL100a742] <- 'Tested'
+
+indFL100a769 <- which((landTtimA$common %in% T769a100$Species) & (landTtimA$INTSITE == '769'))
+str(indFL100a769)
+landTtimA[indFL100a769,]
+landTtimA$testStatus100mi[indFL100a769] <- 'Tested'
+
+indFL100a770 <- which((landTtimA$common %in% T770a100$Species) & (landTtimA$INTSITE == '770'))
+str(indFL100a770)
+landTtimA[indFL100a770,]
+landTtimA$testStatus100mi[indFL100a770] <- 'Tested'
+
+landTtimA$testStatus100mi[landTtimA$testStatus100mi %in% 'NA'] <- 'Not Tested'
+
+FLaProp25mi <- landTtimA %>%
+  group_by(INTSITE, testStatus25mi) %>%
+  summarise(n_distinct(common), landings = sum(landing), biomass = sum(wgt_ab1))
+
+FLaProp100mi <- landTtimA %>%
+  group_by(INTSITE, testStatus100mi) %>%
+  summarise(n_distinct(common), landings = sum(landing), biomass = sum(wgt_ab1))
+
+write.csv(FLaProp25mi, "~/FUIteam/PydioData/env/data_outputs/FLaProp25mi.csv")
+write.csv(FLaProp100mi, "~/FUIteam/PydioData/env/data_outputs/FLaProp100mi.csv")
+```
+
+Timeframe B, 25 mi
+
+```{r}
+str(landTtimB)
+str(mercFL25miB)
+unique(mercFL25miB$Species)
+
+#need to convert lower case to upper case for the two dataframes to be able search properly
+mercFL25miB$Species <- toupper(mercFL25miB$Species)
+mercFL25miB$Species <- trimws(mercFL25miB$Species, which = c("right"), whitespace = "[ \t\r\n]")
+
+mercFL100miB$Species <- toupper(mercFL100miB$Species)
+mercFL100miB$Species <- trimws(mercFL100miB$Species, which = c("right"), whitespace = "[ \t\r\n]")
+
+#edit COMMON SNOOK in MRIP data to read SNOOK so they match
+landTtimB$common <- gsub("COMMON SNOOK", "SNOOK", landTtimB$common)
+
+#top sites = 770, 632, 3802, 769, 614, within 25 mi
+unique(mercFL25miB$INTSITE)
+unique(landTtimB$INTSITE)
+T614b25 <- subset(mercFL25miB,mercFL25miB$INTSITE == '614b')
+T632b25 <- subset(mercFL25miB,mercFL25miB$INTSITE == '632b')
+T3802b25 <- subset(mercFL25miB,mercFL25miB$INTSITE == '3802b')
+T769b25 <- subset(mercFL25miB,mercFL25miB$INTSITE == '769b')
+T770b25 <- subset(mercFL25miB,mercFL25miB$INTSITE == '770b')
+
+indFL25a614 <- which((landTtimB$common %in% T614b25$Species) & (landTtimB$INTSITE == '614'))
+str(indFL25a614)
+landTtimB[indFL25a614,]
+unique((subset(landTtimB,landTtimB$INTSITE == '614'))$common)
+unique(T614b25$Species)
+
+landTtimB$testStatus25mi <- rep('NA', nrow(landTtimB))
+landTtimB$testStatus25mi[indFL25a614] <- 'Tested'
+
+indFL25a632 <- which((landTtimB$common %in% T632b25$Species) & (landTtimB$INTSITE == '632'))
+str(indFL25a632)
+landTtimB[indFL25a632,]
+unique(T632b25$Species)
+landTtimB$testStatus25mi[indFL25a632] <- 'Tested'
+
+indFL25a3802 <- which((landTtimB$common %in% T3802b25$Species) & (landTtimB$INTSITE == '3802'))
+str(indFL25a3802)
+landTtimB[indFL25a3802,]
+landTtimB$testStatus25mi[indFL25a3802] <- 'Tested'
+
+indFL25a769 <- which((landTtimB$common %in% T769b25$Species) & (landTtimB$INTSITE == '769'))
+str(indFL25a769)
+landTtimB[indFL25a769,]
+landTtimB$testStatus25mi[indFL25a769] <- 'Tested'
+
+indFL25a770 <- which((landTtimB$common %in% T770b25$Species) & (landTtimB$INTSITE == '770'))
+str(indFL25a770)
+landTtimB[indFL25a770,]
+landTtimB$testStatus25mi[indFL25a770] <- 'Tested'
+
+landTtimB$testStatus25mi[landTtimB$testStatus25mi %in% 'NA'] <- 'Not Tested'
+```
+
+now 100 mi, timeframe B
+
+```{r}
+#top sites = 770, 632, 3802, 769, 614, within 100 mi
+unique(mercFL100miB$INTSITE)
+unique(landTtimB$INTSITE)
+T614b100 <- subset(mercFL100miB,mercFL100miB$INTSITE == '614b')
+T632b100 <- subset(mercFL100miB,mercFL100miB$INTSITE == '632b')
+T3802b100 <- subset(mercFL100miB,mercFL100miB$INTSITE == '3802b')
+T769b100 <- subset(mercFL100miB,mercFL100miB$INTSITE == '769b')
+T770b100 <- subset(mercFL100miB,mercFL100miB$INTSITE == '770b')
+
+indFL100a614 <- which((landTtimB$common %in% T614b100$Species) & (landTtimB$INTSITE == '614'))
+str(indFL100a614)
+landTtimB[indFL100a614,]
+unique((subset(landTtimB,landTtimB$INTSITE == '614'))$common)
+unique(T614b100$Species)
+
+landTtimB$testStatus100mi <- rep('NA', nrow(landTtimB))
+landTtimB$testStatus100mi[indFL100a614] <- 'Tested'
+
+indFL100a632 <- which((landTtimB$common %in% T632b100$Species) & (landTtimB$INTSITE == '632'))
+str(indFL100a632)
+landTtimB[indFL100a632,]
+unique(T632b100$Species)
+landTtimB$testStatus100mi[indFL100a632] <- 'Tested'
+
+indFL100a3802 <- which((landTtimB$common %in% T3802b100$Species) & (landTtimB$INTSITE == '3802'))
+str(indFL100a3802)
+landTtimB[indFL100a3802,]
+landTtimB$testStatus100mi[indFL100a3802] <- 'Tested'
+
+indFL100a769 <- which((landTtimB$common %in% T769b100$Species) & (landTtimB$INTSITE == '769'))
+str(indFL100a769)
+landTtimB[indFL100a769,]
+unique((subset(landTtimB,landTtimB$INTSITE == '769'))$common)
+unique(T769b100$Species)
+landTtimB$testStatus100mi[indFL100a769] <- 'Tested'
+
+indFL100a770 <- which((landTtimB$common %in% T770b100$Species) & (landTtimB$INTSITE == '770'))
+str(indFL100a770)
+landTtimB[indFL100a770,]
+landTtimB$testStatus100mi[indFL100a770] <- 'Tested'
+
+landTtimB$testStatus100mi[landTtimB$testStatus100mi %in% 'NA'] <- 'Not Tested'
+
+FLbProp25mi <- landTtimB %>%
+  group_by(INTSITE, testStatus25mi) %>%
+  summarise(n_distinct(common), landings = sum(landing), biomass = sum(wgt_ab1))
+
+FLbProp100mi <- landTtimB %>%
+  group_by(INTSITE, testStatus100mi) %>%
+  summarise(n_distinct(common), landings = sum(landing), biomass = sum(wgt_ab1))
+
+write.csv(FLbProp25mi, "~/FUIteam/PydioData/env/data_outputs/FLbProp25mi.csv")
+write.csv(FLbProp100mi, "~/FUIteam/PydioData/env/data_outputs/FLbProp100mi.csv")
+```
+
+
+Size Comparison
+try it out, LA time frame A
+
+```{r, echo = FALSE}
+str(DFla100miA)
+str(mercLA100miA)
+str(landOtimA)
+
+
+
+#222, 231, 306, 155, 151,
+#wgt, vectors 222
+Awgt222mrip <- subset(landOtimA,landOtimA$INTSITE == '222')
+Awgt222mripT <- subset(Awgt222mrip,Awgt222mrip$testStatus100mi == 'Tested')
+Awgt222merc <- subset(DFla100miA,DFla100miA$INTSITE == '222')
+Awgt222mercT <- Awgt222merc[Awgt222merc$spName %in% (unique(Awgt222mripT$common)),]
+
+unique(Awgt222mrip$common)
+unique(Awgt222mripT$common)
+
+str(Awgt222mripT)
+str(Awgt222merc)
+Asub222mrip <- Awgt222mripT[,c(11:12,21)]
+Asub222mrip$source <- 'MRIP'
+colnames(Asub222mrip) <- c("ZIP", "spName", "aveWt_g","source")
+
+Asub222merc <- Awgt222mercT[,c(10:11)]
+Asub222merc$source <- 'MERC'
+Asub222merc$ZIP <- 'NA'
+Asub222merc <- Asub222merc[,c("ZIP", "spName", "aveWt_g","source")]
+unique(Asub222merc$spName)
+
+comp222a <- rbind(Asub222mrip,Asub222merc)
+
+ggplot(comp222a, aes(x=spName, y=aveWt_g, fill = source))  + 
+  geom_boxplot() + 
+  xlab("Species") + 
+  ylab("Average Weight (g)") +
+  theme(axis.text.x = element_text(size = 12, face = "bold", angle = 45, hjust = 1),
+        axis.text.y = element_text(size = 12, face = "bold"),  
+        axis.title.x = element_text(size = 16, face = "plain"),
+        axis.title.y = element_text(size = 16, face = "plain")) + 
+  theme(legend.text=element_text(size = 12, face = "plain"),
+        legend.title=element_text(size = 14, face = "bold"))
+
+library(plyr)
+results.222a <-ddply(comp222a,.(spName),function(x) summarize(x,
+Pvalue=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$p.value,
+Estimate.MERC=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[1],
+Estimate.MRIP=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[2]))
+results.222a$adjP <- p.adjust(results.222a$Pvalue, method = 'fdr', n = length(results.222a$Pvalue))
+results.222a$meanDiff <- (results.222a$Estimate.MERC - results.222a$Estimate.MRIP)
+results.222a
+
+#wgt, vectors 231
+Awgt231mrip <- subset(landOtimA,landOtimA$INTSITE == '231')
+Awgt231mripT <- subset(Awgt231mrip,Awgt231mrip$testStatus100mi == 'Tested')
+Awgt231merc <- subset(DFla100miA,DFla100miA$INTSITE == '231')
+Awgt231mercT <- Awgt231merc[Awgt231merc$spName %in% (unique(Awgt231mripT$common)),]
+
+unique(Awgt231mrip$common)
+unique(Awgt231mripT$common)
+
+Asub231mrip <- Awgt231mripT[,c(11:12,21)]
+Asub231mrip$source <- 'MRIP'
+colnames(Asub231mrip) <- c("ZIP", "spName", "aveWt_g","source")
+
+Asub231merc <- Awgt231mercT[,c(10:11)]
+Asub231merc$source <- 'MERC'
+Asub231merc$ZIP <- 'NA'
+Asub231merc <- Asub231merc[,c("ZIP", "spName", "aveWt_g","source")]
+unique(Asub231merc$spName)
+
+comp231a <- rbind(Asub231mrip,Asub231merc)
+
+ggplot(comp231a, aes(x=spName, y=aveWt_g, fill = source))  + 
+  geom_boxplot() + 
+  xlab("Species") + 
+  ylab("Average Weight (g)") +
+  theme(axis.text.x = element_text(size = 12, face = "bold", angle = 45, hjust = 1),
+        axis.text.y = element_text(size = 12, face = "bold"),  
+        axis.title.x = element_text(size = 16, face = "plain"),
+        axis.title.y = element_text(size = 16, face = "plain")) + 
+  theme(legend.text=element_text(size = 12, face = "plain"),
+        legend.title=element_text(size = 14, face = "bold"))
+
+results.231a <-ddply(comp231a,.(spName),function(x) summarize(x,
+Pvalue=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$p.value,
+Estimate.MERC=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[1],
+Estimate.MRIP=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[2]))
+results.231a$adjP <- p.adjust(results.231a$Pvalue, method = 'fdr', n = length(results.231a$Pvalue))
+results.231a$meanDiff <- (results.231a$Estimate.MERC - results.231a$Estimate.MRIP)
+results.231a
+
+#wgt, vectors 306
+Awgt306mrip <- subset(landOtimA,landOtimA$INTSITE == '306')
+Awgt306mripT <- subset(Awgt306mrip,Awgt306mrip$testStatus100mi == 'Tested')
+Awgt306merc <- subset(DFla100miA,DFla100miA$INTSITE == '306')
+Awgt306mercT <- Awgt306merc[Awgt306merc$spName %in% (unique(Awgt306mripT$common)),]
+
+Asub306mrip <- Awgt306mripT[,c(11:12,21)]
+Asub306mrip$source <- 'MRIP'
+colnames(Asub306mrip) <- c("ZIP", "spName", "aveWt_g","source")
+
+Asub306merc <- Awgt306mercT[,c(10:11)]
+Asub306merc$source <- 'MERC'
+Asub306merc$ZIP <- 'NA'
+Asub306merc <- Asub306merc[,c("ZIP", "spName", "aveWt_g","source")]
+
+comp306a <- rbind(Asub306mrip,Asub306merc)
+count(Asub306merc$spName)
+
+ggplot(comp306a, aes(x=spName, y=aveWt_g, fill = source))  + 
+  geom_boxplot() + 
+  xlab("Species") + 
+  ylab("Average Weight (g)") +
+  theme(axis.text.x = element_text(size = 12, face = "bold", angle = 45, hjust = 1),
+        axis.text.y = element_text(size = 12, face = "bold"),  
+        axis.title.x = element_text(size = 16, face = "plain"),
+        axis.title.y = element_text(size = 16, face = "plain")) + 
+  theme(legend.text=element_text(size = 12, face = "plain"),
+        legend.title=element_text(size = 14, face = "bold"))
+
+results.306a <-ddply(comp306a,.(spName),function(x) summarize(x,
+Pvalue=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$p.value,
+Estimate.MERC=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[1],
+Estimate.MRIP=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[2]))
+results.306a$adjP <- p.adjust(results.306a$Pvalue, method = 'fdr', n = length(results.306a$Pvalue))
+results.306a$meanDiff <- (results.306a$Estimate.MERC - results.306a$Estimate.MRIP)
+results.306a
+
+#wgt, vectors 155
+Awgt155mrip <- subset(landOtimA,landOtimA$INTSITE == '155')
+Awgt155mripT <- subset(Awgt155mrip,Awgt155mrip$testStatus100mi == 'Tested')
+Awgt155merc <- subset(DFla100miA,DFla100miA$INTSITE == '155')
+Awgt155mercT <- Awgt155merc[Awgt155merc$spName %in% (unique(Awgt155mripT$common)),]
+
+Asub155mrip <- Awgt155mripT[,c(11:12,21)]
+Asub155mrip$source <- 'MRIP'
+colnames(Asub155mrip) <- c("ZIP", "spName", "aveWt_g","source")
+
+Asub155merc <- Awgt155mercT[,c(10:11)]
+Asub155merc$source <- 'MERC'
+Asub155merc$ZIP <- 'NA'
+Asub155merc <- Asub155merc[,c("ZIP", "spName", "aveWt_g","source")]
+
+comp155a <- rbind(Asub155mrip,Asub155merc)
+count(Asub155mrip$spName)
+
+ggplot(comp155a, aes(x=spName, y=aveWt_g, fill = source))  + 
+  geom_boxplot() + 
+  xlab("Species") + 
+  ylab("Average Weight (g)") +
+  theme(axis.text.x = element_text(size = 12, face = "bold", angle = 45, hjust = 1),
+        axis.text.y = element_text(size = 12, face = "bold"),  
+        axis.title.x = element_text(size = 16, face = "plain"),
+        axis.title.y = element_text(size = 16, face = "plain")) + 
+  theme(legend.text=element_text(size = 12, face = "plain"),
+        legend.title=element_text(size = 14, face = "bold"))
+
+results.155a <-ddply(comp155a,.(spName),function(x) summarize(x,
+Pvalue=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$p.value,
+Estimate.MERC=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[1],
+Estimate.MRIP=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[2]))
+results.155a$adjP <- p.adjust(results.155a$Pvalue, method = 'fdr', n = length(results.155a$Pvalue))
+results.155a$meanDiff <- (results.155a$Estimate.MERC - results.155a$Estimate.MRIP)
+results.155a
+```
+
+Going to try this a different way, ignoring intsite but also removing duplicate mercury results. Will only use mercury samples from within 100 mi
+
+```{r}
+str(DFla100miA)
+subDFla100miA <- DFla100miA[,1:21]
+str(subDFla100miA)
+
+#calculate ave weight for MRIP
+landOtimAwt <- landOtimA
+landOtimAwt$aveWt <- (landOtimAwt$wgt_ab1*1000)/landOtimAwt$landing #in g
+
+meltDFla100miA <- subDFla100miA %>% distinct()
+str(meltDFla100miA)
+unique(meltDFla100miA$spName)
+unique(mripLATestedA$common)
+
+#now compare mrip to merc for time frame A in Louisiana
+mripLATestedA <- subset(landOtimAwt,landOtimAwt$testStatus100mi == 'Tested')
+mercLAtestA <- meltDFla100miA[meltDFla100miA$spName %in% (unique(mripLATestedA$common)),]
+unique(mercLAtestA$spName)
+
+AsubLAmrip <- mripLATestedA[,c(11:12,21)]
+AsubLAmrip$source <- 'MRIP'
+colnames(AsubLAmrip) <- c("ZIP", "spName", "aveWt_g","source")
+
+AsubLAmerc <- mercLAtestA[,c(10:11)]
+AsubLAmerc$source <- 'MERC'
+AsubLAmerc$ZIP <- 'NA'
+AsubLAmerc <- AsubLAmerc[,c("ZIP", "spName", "aveWt_g","source")]
+
+compLAa <- rbind(AsubLAmrip,AsubLAmerc)
+
+ggplot(compLAa, aes(x=spName, y=aveWt_g, fill = source))  + 
+  geom_boxplot() + 
+  xlab("Species") + 
+  ylab("Average Weight (g)") +
+  theme(axis.text.x = element_text(size = 12, face = "bold", angle = 45, hjust = 1),
+        axis.text.y = element_text(size = 12, face = "bold"),  
+        axis.title.x = element_text(size = 16, face = "plain"),
+        axis.title.y = element_text(size = 16, face = "plain")) + 
+  theme(legend.text=element_text(size = 12, face = "plain"),
+        legend.title=element_text(size = 14, face = "bold"))
+
+results.LAa <-ddply(compLAa,.(spName),function(x) summarize(x,
+Pvalue=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$p.value,
+Estimate.MERC=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[1],
+Estimate.MRIP=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[2]))
+results.LAa$adjP <- p.adjust(results.LAa$Pvalue, method = 'fdr', n = length(results.LAa$Pvalue))
+results.LAa$meanDiff <- (results.LAa$Estimate.MERC - results.LAa$Estimate.MRIP)
+results.LAa
+
+###timeframe B
+landOtimBwt <- landOtimB
+landOtimBwt$aveWt <- (landOtimBwt$wgt_ab1*1000)/landOtimBwt$landing #in g
+
+str(DFla100miBA)
+subDFla100miB <- DFla100miBA[,1:21]
+str(subDFla100miB)
+
+meltDFla100miB <- subDFla100miB %>% distinct()
+str(meltDFla100miB)
+unique(meltDFla100miB$spName)
+unique(mripLATestedB$common)
+unique(mercLAtestB$spName)
+
+#now compare mrip to merc for time frame A in Louisiana
+mripLATestedB <- subset(landOtimBwt,landOtimBwt$testStatus100mi == 'Tested')
+mercLAtestB <- meltDFla100miB[meltDFla100miB$spName %in% (unique(mripLATestedB$common)),]
+unique(mercLAtestB$spName)
+str(mripLATestedB)
+
+BsubLAmrip <- mripLATestedB[,c(11:12,20)]
+BsubLAmrip$source <- 'MRIP'
+colnames(BsubLAmrip) <- c("ZIP", "spName", "aveWt_g","source")
+
+BsubLAmerc <- mercLAtestB[,c(10:11)]
+BsubLAmerc$source <- 'MERC'
+BsubLAmerc$ZIP <- 'NA'
+BsubLAmerc <- BsubLAmerc[,c("ZIP", "spName", "aveWt_g","source")]
+
+compLAb <- rbind(BsubLAmrip,BsubLAmerc)
+
+ggplot(compLAb, aes(x=spName, y=aveWt_g, fill = source))  + 
+  geom_boxplot() + 
+  xlab("Species") + 
+  ylab("Average Weight (g)") +
+  theme(axis.text.x = element_text(size = 12, face = "bold", angle = 45, hjust = 1),
+        axis.text.y = element_text(size = 12, face = "bold"),  
+        axis.title.x = element_text(size = 16, face = "plain"),
+        axis.title.y = element_text(size = 16, face = "plain")) + 
+  theme(legend.text=element_text(size = 12, face = "plain"),
+        legend.title=element_text(size = 14, face = "bold"))
+
+results.LAb <-ddply(compLAb,.(spName),function(x) summarize(x,
+Pvalue=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$p.value,
+Estimate.MERC=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[1],
+Estimate.MRIP=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[2]))
+results.LAb$adjP <- p.adjust(results.LAb$Pvalue, method = 'fdr', n = length(results.LAb$Pvalue))
+results.LAb$meanDiff <- (results.LAb$Estimate.MERC - results.LAb$Estimate.MRIP)
+results.LAb
+```
+
+On to FLorida!
+
+```{r}
+landTtimAwt <- landTtimA
+landTtimAwt$aveWt <- (landTtimAwt$wgt_ab1*1000)/landTtimAwt$landing #in g
+
+str(DFfl100miA)
+unique(DFfl100miA$INTSITE)
+subDFfl100miA <- DFfl100miA[,1:34]
+str(subDFfl100miA)
+
+meltDFfl100miA <- subDFfl100miA %>% distinct()
+str(meltDFfl100miA)
+unique(meltDFfl100miA$Species)
+
+#need to convert lower case to upper case for the two dataframes to be able search properly
+meltDFfl100miA$Species <- toupper(meltDFfl100miA$Species)
+meltDFfl100miA$Species <- trimws(meltDFfl100miA$Species, which = c("right"), whitespace = "[ \t\r\n]")
+
+#now compare mrip to merc for time frame A in Louisiana
+mripFLTestedA <- subset(landTtimAwt,landTtimAwt$testStatus100mi == 'Tested')
+mercFLtestA <- meltDFfl100miA[meltDFfl100miA$Species %in% (unique(mripFLTestedA$common)),]
+unique(mripFLTestedA$common)
+unique(mercFLtestA$Species)
+
+str(mripFLTestedA)
+str(mercFLtestA)
+mercFLtestA
+AsubFLmrip <- mripFLTestedA[,c(11:12,20)]
+AsubFLmrip$source <- 'MRIP'
+colnames(AsubFLmrip) <- c("ZIP", "spName", "aveWt_g","source")
+
+AsubFLmerc <- mercFLtestA[,c(12,18)]
+AsubFLmerc$source <- 'MERC'
+AsubFLmerc$ZIP <- 'NA'
+AsubFLmerc <- AsubFLmerc[,c("ZIP", "Species", "Whole_weight","source")]
+colnames(AsubFLmerc) <- c("ZIP", "spName", "aveWt_g","source")
+
+compFLa <- rbind(AsubFLmrip,AsubFLmerc)
+
+ggplot(compFLa, aes(x=spName, y=aveWt_g, fill = source))  + 
+  geom_boxplot() + 
+  xlab("Species") + 
+  ylab("Average Weight (g)") +
+  theme(axis.text.x = element_text(size = 12, face = "bold", angle = 45, hjust = 1),
+        axis.text.y = element_text(size = 12, face = "bold"),  
+        axis.title.x = element_text(size = 16, face = "plain"),
+        axis.title.y = element_text(size = 16, face = "plain")) + 
+  theme(legend.text=element_text(size = 12, face = "plain"),
+        legend.title=element_text(size = 14, face = "bold"))
+
+#not enough observations of mercury weights to run
+results.FLa <-ddply(compFLa,.(spName),function(x) summarize(x,
+Pvalue=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$p.value,
+Estimate.MERC=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[1],
+Estimate.MRIP=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[2]))
+results.FLa$adjP <- p.adjust(results.FLa$Pvalue, method = 'fdr', n = length(results.FLa$Pvalue))
+results.FLa$meanDiff <- (results.FLa$Estimate.MERC - results.FLa$Estimate.MRIP)
+results.FLa
+
+###timeframe B
+landTtimBwt <- landTtimB
+landTtimBwt$aveWt <- (landTtimBwt$wgt_ab1*1000)/landTtimBwt$landing #in g
+
+str(DFfl100miB)
+subDFfl100miB <- DFfl100miB[,1:34]
+str(subDFfl100miB)
+
+meltDFfl100miB <- subDFfl100miB %>% distinct()
+str(meltDFfl100miB)
+
+#need to convert lower case to upper case for the two dataframes to be able search properly
+meltDFfl100miB$Species <- toupper(meltDFfl100miB$Species)
+meltDFfl100miB$Species <- trimws(meltDFfl100miB$Species, which = c("right"), whitespace = "[ \t\r\n]")
+
+#now compare mrip to merc for time frame A in Louisiana
+mripFLTestedB <- subset(landTtimBwt,landTtimBwt$testStatus100mi == 'Tested')
+mercFLtestB <- meltDFfl100miB[meltDFfl100miB$Species %in% (unique(mripFLTestedB$common)),]
+unique(mercFLtestB$Species)
+str(mripFLTestedB)
+unique(meltDFfl100miB$Species)
+unique(mripFLTestedB$common)
+
+BsubFLmrip <- mripFLTestedB[,c(11:12,20)]
+BsubFLmrip$source <- 'MRIP'
+colnames(BsubFLmrip) <- c("ZIP", "spName", "aveWt_g","source")
+
+BsubFLmerc <- mercFLtestB[,c(12,18)]
+BsubFLmerc$source <- 'MERC'
+BsubFLmerc$ZIP <- 'NA'
+BsubFLmerc <- BsubFLmerc[,c("ZIP", "Species", "Whole_weight","source")]
+colnames(BsubFLmerc) <- c("ZIP", "spName", "aveWt_g","source")
+
+compFLb <- rbind(BsubFLmrip,BsubFLmerc)
+
+ggplot(compFLb, aes(x=spName, y=aveWt_g, fill = source))  + 
+  geom_boxplot() + 
+  xlab("Species") + 
+  ylab("Average Weight (g)") +
+  theme(axis.text.x = element_text(size = 12, face = "bold", angle = 45, hjust = 1),
+        axis.text.y = element_text(size = 12, face = "bold"),  
+        axis.title.x = element_text(size = 16, face = "plain"),
+        axis.title.y = element_text(size = 16, face = "plain")) + 
+  theme(legend.text=element_text(size = 12, face = "plain"),
+        legend.title=element_text(size = 14, face = "bold"))
+
+#not enough observations
+results.FLb <-ddply(compFLb,.(spName),function(x) summarize(x,
+Pvalue=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$p.value,
+Estimate.MERC=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[1],
+Estimate.MRIP=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[2]))
+results.FLb$adjP <- p.adjust(results.FLb$Pvalue, method = 'fdr', n = length(results.FLb$Pvalue))
+results.FLb$meanDiff <- (results.FLb$Estimate.MERC - results.FLb$Estimate.MRIP)
+results.FLb
+```
+
 
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
