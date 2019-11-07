@@ -480,6 +480,7 @@ la100miBAsw <- la100miBA[la100miBA$spName %in% mFishes,]
 unique(la25miAsw$spName)
 
 ### Florida's turn!
+#note Florida only had data from 2003, 2004
 
 FLmercLoc <- read.csv(file.path("~/FUIteam/PydioData/env/raw/", "FLmercLocUp.csv"), 
                       stringsAsFactors = FALSE)
@@ -502,6 +503,7 @@ FLmercSpB <- subset(FLmercSp, !(is.na(FLmercSp[,26])))
 head(FLmercSpB)
 str(FLmercSpB)
 unique(FLmercSp[,34])
+unique(FLmercSpB$Year)
 
 #convert to decimal degrees from degrees minutes
 FLmercSp$LatDD <- with(FLmercSp, (FLmercSp[,26] + (FLmercSp[,27]/60)))

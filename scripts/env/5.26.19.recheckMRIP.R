@@ -105,6 +105,7 @@ laTopLandA <- LAtimA %>%
 str(laTopLandA)
 print(laTopLandA, n=16) #top sites = 222, 231, 155, 159, 151
 laTopLandAordered <- laTopLandA %>% arrange(desc(landings))
+View(laTopLandAordered)
 
 laTopLandB <- LAtimB %>% 
   group_by(INTSITE) %>% 
@@ -112,6 +113,7 @@ laTopLandB <- LAtimB %>%
 str(laTopLandB)
 print(laTopLandB, n=16) #top sites = 222, 150, 151, 270, 155
 laTopLandBordered <- laTopLandB %>% arrange(desc(landings))
+View(laTopLandBordered)
 
 library(dplyr)
 flTopLandA <- FLtimA %>% 
@@ -331,6 +333,8 @@ orleansTopA <- orleanstimA %>%
   summarise(landings = sum(landing))
 str(orleansTopA)
 orleansTopAord <- orleansTopA %>% arrange(desc(landings))
+View(orleansTopAord)
+sum(orleansTopAord$landings)
 #top sites = 222, 231, 306, 155, 151
 oTopA <- cbind(222, 231, 306, 155, 151)
 oTopA <- as.character(oTopA)
@@ -345,6 +349,8 @@ orleansTopB <- orleanstimB %>%
   summarise(landings = sum(landing))
 str(orleansTopB)
 orleansTopBord <- orleansTopB %>% arrange(desc(landings))
+View(orleansTopBord)
+sum(orleansTopBord$landings)
 #top sites = 222, 159, 306, 3325, 151
 oTopB <- cbind(222, 159, 306, 3325, 151)
 oTopB <- as.character(oTopB)
@@ -359,6 +365,8 @@ tampaTopA <- tampatimA %>%
   summarise(landings = sum(landing))
 str(tampaTopA)
 tampaTopAord <- tampaTopA %>% arrange(desc(landings))
+View(tampaTopAord)
+sum(tampaTopAord$landings)
 #top sites = 770, 769, 632, 615, 742
 tTopA <- cbind(770, 769, 632, 615, 742)
 tTopA <- as.character(tTopA)
@@ -373,6 +381,7 @@ tampaTopB <- tampatimB %>%
   summarise(landings = sum(landing))
 str(tampaTopB)
 tampaTopBord <- tampaTopB %>% arrange(desc(landings))
+sum(tampaTopBord$landings)
 #top sites = 770, 632, 3802, 769, 614
 tTopB <- cbind(770, 632, 3802, 769, 614)
 tTopB <- as.character(tTopB)
