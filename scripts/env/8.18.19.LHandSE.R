@@ -64,6 +64,15 @@ flSE$zcta <- as.character(flSE$zcta)
 LHSEflB <- left_join(x = LHflB,y = flSE, by = c("ZIP" = "zcta"))
 str(LHSEflB)
 head(LHSEflB)
+View(LHSEflB)
+
+#ADD IN MISSING TROPHIC LEVELS
+LHSEflB$trophicCode[LHSEflB$spName == "SEATROUT GENUS"] <- 4.0
+LHSEflB$trophicCode[LHSEflB$spName == "STINGRAY GENUS"] <- 3.5
+LHSEflB$trophicCode[LHSEflB$spName == "MULLET GENUS"] <- 2
+LHSEflB$trophicCode[LHSEflB$spName == "LEFTEYE FLOUNDER FAMILY"] <- 3.5
+LHSEflB$trophicCode[LHSEflB$spName == "MOJARRA FAMILY"] <- 2.3
+
 
 
 ##aggregate to have a look at the data
@@ -89,11 +98,16 @@ sumLHSEflB <- LHSEflB %>%
             aveONEveh = mean(one_vehicle_percent_hhlds, na.rm = TRUE), 
             aveStamp = mean(food_stamp_percent_hhlds, na.rm = TRUE))
 
-ggplot(LHSEflB, aes(testStatus100mi, trophicCode)) + geom_boxplot() 
+library(ggpubr)
+ggplot(LHSEflB, aes(testStatus100mi, trophicCode)) + geom_boxplot() +
+  stat_compare_means()
 #untested species tend to be lower on the food chain
-ggplot(LHSEflB, aes(testStatus100mi, racial_minority_percent_pop)) + geom_boxplot()
-ggplot(LHSEflB, aes(testStatus100mi, foreign_born_percent_pop)) + geom_boxplot()
-ggplot(LHSEflB, aes(testStatus100mi, poverty_percent_famil)) + geom_boxplot()
+ggplot(LHSEflB, aes(testStatus100mi, racial_minority_percent_pop)) + geom_boxplot() +
+  stat_compare_means()
+ggplot(LHSEflB, aes(testStatus100mi, foreign_born_percent_pop)) + geom_boxplot()+
+  stat_compare_means()
+ggplot(LHSEflB, aes(testStatus100mi, poverty_percent_famil)) + geom_boxplot()+
+  stat_compare_means()
 ggplot(LHSEflB, aes(testStatus100mi, median_income_dollars_hhlds_percent_scaled)) + geom_boxplot()
 ggplot(LHSEflB, aes(testStatus100mi, education_HS_GED_percent_pop)) + geom_boxplot()
 ggplot(LHSEflB, aes(testStatus100mi, no_vehicles_percent_hhlds)) + geom_boxplot()
@@ -157,7 +171,26 @@ str(LHflA)
 LHSEflA <- left_join(x = LHflA,y = flSE, by = c("ZIP" = "zcta"))
 str(LHSEflA)
 head(LHSEflA)
+View(LHSEflA)
 
+#ADD IN MISSING TROPHIC LEVELS
+LHSEflA$trophicCode[LHSEflA$spName == "KINGFISH GENUS"] <- 3.6
+LHSEflA$trophicCode[LHSEflA$spName == "MOJARRA FAMILY"] <- 2.3
+LHSEflA$trophicCode[LHSEflA$spName == "HERRING FAMILY"] <- 3.7
+LHSEflA$trophicCode[LHSEflA$spName == "STINGRAY GENUS"] <- 3.5
+LHSEflA$trophicCode[LHSEflA$spName == "LIZARDFISH GENUS"] <- 4.35
+LHSEflA$trophicCode[LHSEflA$spName == "ORANGE FILEFISH"] <- 2.0
+LHSEflA$trophicCode[LHSEflA$spName == "GRUNT GENUS"] <- 3.43
+LHSEflA$trophicCode[LHSEflA$spName == "MACKEREL GENUS"] <- 4.47
+LHSEflA$trophicCode[LHSEflA$spName == "SEATROUT GENUS"] <- 4.0
+LHSEflA$trophicCode[LHSEflA$spName == "SNOOK"] <- 4.2
+LHSEflA$trophicCode[LHSEflA$spName == "LEFTEYE FLOUNDER FAMILY"] <- 3.5
+LHSEflA$trophicCode[LHSEflA$spName == "ANCHOVY FAMILY"] <- 3.4
+LHSEflA$trophicCode[LHSEflA$spName == "MULLET GENUS"] <- 2
+
+
+ggplot(LHSEflA, aes(testStatus100mi, trophicCode)) + geom_boxplot() +
+  stat_compare_means()
 
 ##aggregate to have a look at the data
 sumLHSEflA <- LHSEflA %>% 
@@ -220,9 +253,28 @@ str(LHlaA)
 str(laSE)
 
 #combine together
-LHSElaA <- left_join(x = LHlaA,y = laSE, by = c("ZIP" = "zcta"))
+LHSElaB <- left_join(x = LHlaA,y = laSE, by = c("ZIP" = "zcta"))
 str(LHSElaA)
 head(LHSElaA)
+View(LHSElaA)
+
+#add in missing trophic levels for species we didn't catch the first time around
+LHSElaA$trophicCode[LHSElaA$spName == "ATLANTIC STINGRAY"] <- 3.5
+LHSElaA$trophicCode[LHSElaA$spName == "GULF MENHADEN"] <- 2.2
+LHSElaA$trophicCode[LHSElaA$spName == "HARDHEAD CATFISH"] <- 3.2
+LHSElaA$trophicCode[LHSElaA$spName == "KINGFISH GENUS"] <- 3.6
+LHSElaA$trophicCode[LHSElaA$spName == "BLUE CATFISH"] <- 3.4
+LHSElaA$trophicCode[LHSElaA$spName == "HARDHEAD CATFISH"] <- 3.2
+LHSElaA$trophicCode[LHSElaA$spName == "SEATROUT GENUS"] <- 4.0
+LHSElaA$trophicCode[LHSElaA$spName == "SOUTHERN FLOUNDER"] <- 3.5
+LHSElaA$trophicCode[LHSElaA$spName == "SPOT"] <- 3.2
+#remove freshwater fish
+finLHSElaA <- subset(LHSElaA, !LHSElaA$spName%in%c("CHANNEL CATFISH", "FRESHWATER DRUM", "LARGEMOUTH BASS"))
+View(finLHSElaA)
+
+
+ggplot(finLHSElaA, aes(testStatus100mi, trophicCode)) + geom_boxplot() +
+  stat_compare_means()
 
 ##aggregate to have a look at the daOa
 sumLHSElaA <- LHSElaA %>% 
@@ -287,6 +339,21 @@ str(laSE)
 LHSElaB <- left_join(x = LHlaB,y = laSE, by = c("ZIP" = "zcta"))
 str(LHSElaB)
 head(LHSElaB)
+View(LHSElaB)
+
+#add in missing trophic levels for species we didn't catch the first time around
+LHSElaB$trophicCode[LHSElaB$spName == "SKIPJACK HERRING"] <- 3.9
+LHSElaB$trophicCode[LHSElaB$spName == "HARDHEAD CATFISH"] <- 3.2
+LHSElaB$trophicCode[LHSElaB$spName == "BLUE CATFISH"] <- 3.4
+LHSElaB$trophicCode[LHSElaB$spName == "HARDHEAD CATFISH"] <- 3.2
+LHSElaB$trophicCode[LHSElaB$spName == "SOUTHERN FLOUNDER"] <- 3.5
+
+#remove freshwater fish
+finLHSElaB <- subset(LHSElaB, !LHSElaB$spName%in%c("BLUEGILL"))
+View(finLHSElaB)
+
+ggplot(finLHSElaB, aes(testStatus100mi, trophicCode)) + geom_boxplot() +
+  stat_compare_means()
 
 ##aggregate to have a look at the daOa
 sumLHSElaB <- LHSElaB %>% 
@@ -435,3 +502,15 @@ LHSEflA %>%
   distinct(spName, testStatus100mi)
 LHSEflB %>% 
   distinct(spName, testStatus100mi)
+
+### trying to get together stuff for visualization
+finLHSElaA$time <- "A"
+finLHSElaB$time <- "B"
+LHSEflA$time <- "A"
+LHSEflB$time <- "B"
+
+tcLAsum <- rbind(finLHSElaA, finLHSElaB)
+tcFLsum <- rbind(LHSEflA, LHSEflB)
+
+ggplot(tcLAsum, aes(testStatus100mi, trophicCode, )) + geom_boxplot() +
+  stat_compare_means(method = t.test)

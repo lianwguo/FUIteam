@@ -2,6 +2,8 @@
 title: "R Notebook"
 output: html_notebook
 ---
+library(dplyr)
+library(plyr)
 
 #mercury data frames
 DFfl25miA <- as.data.frame(fl25miA)
@@ -356,7 +358,6 @@ T770a25 <- subset(mercFL25miA,mercFL25miA$INTSITE == '770')
 indFL25a615 <- which((landTtimA$common %in% T615a25$Species) & (landTtimA$INTSITE == '615'))
 str(indFL25a615)
 landTtimA[indFL25a615,]
-unique(indFL25a615$Common)
 unique((subset(landTtimA,landTtimA$INTSITE == '615'))$common)
 unique(T615a25$Species)
 
@@ -565,6 +566,8 @@ Size Comparison
 try it out, LA time frame A
 
 ```{r, echo = FALSE}
+
+##GO TO NEXT SECTION _ IGNORE THIS ONE
 str(DFla100miA)
 str(mercLA100miA)
 str(landOtimA)
@@ -581,10 +584,12 @@ Awgt222mercT <- Awgt222merc[Awgt222merc$spName %in% (unique(Awgt222mripT$common)
 unique(Awgt222mrip$common)
 unique(Awgt222mripT$common)
 
-str(Awgt222mripT)
-str(Awgt222merc)
+View(Awgt222mripT)
+View(Awgt222merc)
 Asub222mrip <- Awgt222mripT[,c(11:12,21)]
+Asub222mrip$aveWt_g <- (Awgt222mripT$wgt_ab1/Awgt222mripT$landing)*1000 #to get ave size per fish
 Asub222mrip$source <- 'MRIP'
+
 colnames(Asub222mrip) <- c("ZIP", "spName", "aveWt_g","source")
 
 Asub222merc <- Awgt222mercT[,c(10:11)]
@@ -744,7 +749,6 @@ landOtimAwt$aveWt <- (landOtimAwt$wgt_ab1*1000)/landOtimAwt$landing #in g
 meltDFla100miA <- subDFla100miA %>% distinct()
 str(meltDFla100miA)
 unique(meltDFla100miA$spName)
-unique(mripLATestedA$common)
 
 #now compare mrip to merc for time frame A in Louisiana
 mripLATestedA <- subset(landOtimAwt,landOtimAwt$testStatus100mi == 'Tested')
@@ -762,16 +766,18 @@ AsubLAmerc <- AsubLAmerc[,c("ZIP", "spName", "aveWt_g","source")]
 
 compLAa <- rbind(AsubLAmrip,AsubLAmerc)
 
-ggplot(compLAa, aes(x=spName, y=aveWt_g, fill = source))  + 
+compLAa$aveWt_kg <- compLAa$aveWt_g/1000
+
+ggplot(compLAa, aes(x=spName, y=aveWt_kg, fill = source))  + 
   geom_boxplot() + 
   xlab("Species") + 
   ylab("Average Weight (g)") +
-  theme(axis.text.x = element_text(size = 12, face = "bold", angle = 45, hjust = 1),
+  theme(axis.text.x = element_text(size = 12, face = "bold"),
         axis.text.y = element_text(size = 12, face = "bold"),  
         axis.title.x = element_text(size = 16, face = "plain"),
         axis.title.y = element_text(size = 16, face = "plain")) + 
   theme(legend.text=element_text(size = 12, face = "plain"),
-        legend.title=element_text(size = 14, face = "bold"))
+        legend.title=element_text(size = 14, face = "bold")) + coord_flip()
 
 results.LAa <-ddply(compLAa,.(spName),function(x) summarize(x,
 Pvalue=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$p.value,
@@ -792,10 +798,8 @@ str(subDFla100miB)
 meltDFla100miB <- subDFla100miB %>% distinct()
 str(meltDFla100miB)
 unique(meltDFla100miB$spName)
-unique(mripLATestedB$common)
-unique(mercLAtestB$spName)
 
-#now compare mrip to merc for time frame A in Louisiana
+#now compare mrip to merc for time frame B in Louisiana
 mripLATestedB <- subset(landOtimBwt,landOtimBwt$testStatus100mi == 'Tested')
 mercLAtestB <- meltDFla100miB[meltDFla100miB$spName %in% (unique(mripLATestedB$common)),]
 unique(mercLAtestB$spName)
@@ -811,12 +815,13 @@ BsubLAmerc$ZIP <- 'NA'
 BsubLAmerc <- BsubLAmerc[,c("ZIP", "spName", "aveWt_g","source")]
 
 compLAb <- rbind(BsubLAmrip,BsubLAmerc)
+compLAb$aveWt_kg <- compLAb$aveWt_g/1000
 
 ggplot(compLAb, aes(x=spName, y=aveWt_g, fill = source))  + 
   geom_boxplot() + 
   xlab("Species") + 
   ylab("Average Weight (g)") +
-  theme(axis.text.x = element_text(size = 12, face = "bold", angle = 45, hjust = 1),
+  theme(axis.text.x = element_text(size = 12, face = "bold"),
         axis.text.y = element_text(size = 12, face = "bold"),  
         axis.title.x = element_text(size = 16, face = "plain"),
         axis.title.y = element_text(size = 16, face = "plain")) + 
