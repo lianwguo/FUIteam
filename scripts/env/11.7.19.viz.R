@@ -196,6 +196,178 @@ ggplot(tcFLsum, aes(testStatus100mi, trophicCode, col = testStatus100mi)) +
 
 #### SE
 
-str(tcFLsum)
-ggplot(tcFLsum, aes(racial_minority_percent_pop, trophicCode, col = testStatus100mi)) + 
-  geom_point()
+View(tcLAsum)
+View(tcFLsum)
+str(finLHSElaA)
+finLHSElaB
+LHSEflA
+LHSEflB
+
+###focus on the results of the SE team's analysis
+
+#florida
+#variables on levels of racial minority, high school educational attainment, 
+#households with one vehicle only, and households on SNAP were significantly 
+#associated with fishing levels at the 0.05 level. Median income and households 
+#with no vehicles were significant at p < 0.08
+
+ggplot(LHSEflA, aes(racial_minority_percent_pop,trophicCode)) +
+  geom_smooth(method='lm') +
+  stat_cor(label.x = 50, label.y = 4.25) +
+  stat_regline_equation(label.x = 60, label.y = 4.22) 
+##more racial minority = lower trophic level *
+ggplot(LHSEflB, aes(racial_minority_percent_pop,trophicCode)) +
+  geom_smooth(method='lm') +
+  stat_cor(label.x = 50, label.y = 4.15) +
+  stat_regline_equation(label.x = 60, label.y = 4.12)
+#more racial minority = higher trophic level ***
+
+ggplot(LHSEflA, aes(education_HS_GED_percent_pop,trophicCode)) +
+  geom_smooth(method='lm') +
+  stat_cor(label.x = 30, label.y = 4.25) +
+  stat_regline_equation(label.x = 30, label.y = 4.22) 
+##higher education = lower trophic level
+ggplot(LHSEflB, aes(education_HS_GED_percent_pop,trophicCode)) +
+  geom_smooth(method='lm') +
+  stat_cor(label.x = 30, label.y = 4.25) +
+  stat_regline_equation(label.x = 30, label.y = 4.22)
+#higher education = lower trophic level
+
+ggplot(LHSEflA, aes(one_vehicle_percent_hhlds,trophicCode)) +
+  geom_smooth(method='lm') +
+  stat_cor(label.x = 30, label.y = 4.25) +
+  stat_regline_equation(label.x = 30, label.y = 4.22) 
+##more households with 1 car = lower trophic level ***
+ggplot(LHSEflB, aes(one_vehicle_percent_hhlds,trophicCode)) +
+  geom_smooth(method='lm') +
+  stat_cor(label.x = 30, label.y = 4.25) +
+  stat_regline_equation(label.x = 30, label.y = 4.22)
+#more households with 1 car = lower trophic level ***
+
+ggplot(LHSEflA, aes(food_stamp_percent_hhlds,trophicCode)) +
+  geom_smooth(method='lm') +
+  stat_cor(label.x = 15, label.y = 4.25) +
+  stat_regline_equation(label.x = 15, label.y = 4.22) 
+##more food stamps = higher trophic level
+ggplot(LHSEflB, aes(food_stamp_percent_hhlds,trophicCode)) +
+  geom_smooth(method='lm') +
+  stat_cor(label.x = 15, label.y = 4.25) +
+  stat_regline_equation(label.x = 15, label.y = 4.22)
+#flat
+
+
+##louisiana
+#foreign-born people, high school educational attainment, and households 
+#with no vehicles were significantly related to fishing levels at the 0.05 level
+
+ggplot(finLHSElaA, aes(foreign_born_percent_pop,trophicCode)) +
+  geom_smooth(method='lm') +
+  stat_cor(label.x = 15, label.y = 4.25) +
+  stat_regline_equation(label.x = 15, label.y = 4.2) 
+#more foreign born = lower trophic level ***
+ggplot(finLHSElaB, aes(foreign_born_percent_pop,trophicCode)) +
+  geom_smooth(method='lm') +
+  stat_cor(label.x = 10, label.y = 4.25) +
+  stat_regline_equation(label.x = 10, label.y = 4.2) 
+#more foreign born = lower trophic level **
+
+ggplot(finLHSElaA, aes(education_HS_GED_percent_pop,trophicCode)) +
+  geom_smooth(method='lm') +
+  stat_cor(label.x = 30, label.y = 4.25) +
+  stat_regline_equation(label.x = 30, label.y = 4.20) 
+##higher education = higher trophic level
+ggplot(finLHSElaB, aes(education_HS_GED_percent_pop,trophicCode)) +
+  geom_smooth(method='lm') +
+  stat_cor(label.x = 30, label.y = 4.25) +
+  stat_regline_equation(label.x = 30, label.y = 4.22)
+#higher education = higher trophic level
+
+ggplot(finLHSElaA, aes(no_vehicles_percent_hhlds,trophicCode)) +
+  geom_smooth(method='lm') +
+  stat_cor(label.x = 30, label.y = 4.25) +
+  stat_regline_equation(label.x = 30, label.y = 4.20) 
+##less vehicles = higher trophic level **
+ggplot(finLHSElaB, aes(no_vehicles_percent_hhlds,trophicCode)) +
+  geom_smooth(method='lm') +
+  stat_cor(label.x = 20, label.y = 4.25) +
+  stat_regline_equation(label.x = 20, label.y = 4.22)
+#less vehicles = higher trophic level *
+
+
+
+
+
+
+
+
+
+
+## stepwise linear regression
+
+# Specify a null model with no predictors
+null_modelFLA <- glm(trophicCode ~ 1, data = LHSEflA, family = gaussian)
+
+# Specify the full model using all of the potential predictors
+full_modelFLA <- glm(trophicCode ~ racial_minority_percent_pop + foreign_born_percent_pop +
+                       poverty_percent_famil + median_income_dollars_hhlds_percent_scaled +
+                       no_vehicles_percent_hhlds + one_vehicle_percent_hhlds +
+                       food_stamp_percent_hhlds + education_HS_GED_percent_pop, 
+                     data = LHSEflA, family = gaussian)
+
+# Use a forward stepwise algorithm to build a parsimonious model
+step_modelFLA <- step(null_modelFLA, scope = list(lower = null_modelFLA, upper = full_modelFLA), 
+                         direction = "both")
+
+# Estimate the stepwise donation probability
+step_prob <- step_modelFLA
+
+# Specify a null model with no predictors
+null_modelFLB <- glm(trophicCode ~ 1, data = LHSEflB, family = gaussian)
+
+# Specify the full model using all of the potential predictors
+full_modelFLB <- glm(trophicCode ~ racial_minority_percent_pop + foreign_born_percent_pop +
+                       poverty_percent_famil + median_income_dollars_hhlds_percent_scaled +
+                       no_vehicles_percent_hhlds + one_vehicle_percent_hhlds +
+                       food_stamp_percent_hhlds + education_HS_GED_percent_pop, 
+                     data = LHSEflB, family = gaussian)
+
+# Use a forward stepwise algorithm to build a parsimonious model
+step_modelFLB <- step(null_modelFLB, scope = list(lower = null_modelFLB, upper = full_modelFLB), 
+                      direction = "both")
+
+# Estimate the stepwise donation probability
+step_prob <- step_modelFLB
+
+# Specify a null model with no predictors
+null_modelLAA <- glm(trophicCode ~ 1, data = finLHSElaA, family = gaussian)
+
+# Specify the full model using all of the potential predictors
+full_modelLAA <- glm(trophicCode ~ racial_minority_percent_pop + foreign_born_percent_pop +
+                       poverty_percent_famil + median_income_dollars_hhlds_percent_scaled +
+                       no_vehicles_percent_hhlds + one_vehicle_percent_hhlds +
+                       food_stamp_percent_hhlds + education_HS_GED_percent_pop, 
+                     data = LHSElaA, family = gaussian)
+
+# Use a forward stepwise algorithm to build a parsimonious model
+step_modelLAA <- step(null_modelLAA, scope = list(lower = null_modelLAA, upper = full_modelLAA), 
+                      direction = "both")
+
+# Estimate the stepwise donation probability
+step_prob <- step_modelLAA
+
+# Specify a null model with no predictors
+null_modelLAB <- glm(trophicCode ~ 1, data = finLHSElaB, family = gaussian)
+
+# Specify the full model using all of the potential predictors
+full_modelLAB <- glm(trophicCode ~ racial_minority_percent_pop + foreign_born_percent_pop +
+                       poverty_percent_famil + median_income_dollars_hhlds_percent_scaled +
+                       no_vehicles_percent_hhlds + one_vehicle_percent_hhlds +
+                       food_stamp_percent_hhlds + education_HS_GED_percent_pop, 
+                     data = LHSElaB, family = gaussian)
+
+# Use a forward stepwise algorithm to build a parsimonious model
+step_modelLAB <- step(null_modelLAB, scope = list(lower = null_modelLAB, upper = full_modelLAB), 
+                      direction = "both")
+
+# Estimate the stepwise donation probability
+step_prob <- step_modelLAB

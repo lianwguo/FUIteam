@@ -55,7 +55,7 @@ laSE <- read.csv(file.path("~/FUIteam/PydioData/env/raw", "la_updated_income.csv
                  stringsAsFactors = FALSE)
 flSE <- read.csv(file.path("~/FUIteam/PydioData/env/raw", "fl_updated_income.csv"), 
                  stringsAsFactors = FALSE)
-
+View(laSE)
 str(laSE)
 laSE$zcta <- as.character(laSE$zcta)
 flSE$zcta <- as.character(flSE$zcta)
