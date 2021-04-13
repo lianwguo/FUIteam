@@ -494,14 +494,14 @@ write.csv(FLbSPbyDIM2ord, "~/FUIteam/PydioData/env/data_outputs/FLbSPbyDIM2ord.c
 #unique sp and tested
 unique(LHSElaA$spName) & unique(LHSElaA$testStatus100mi)
 # distinct
-LHSElaA %>% 
-  distinct(spName, testStatus100mi)
-LHSElaB %>% 
-  distinct(spName, testStatus100mi)
-LHSEflA %>% 
-  distinct(spName, testStatus100mi)
-LHSEflB %>% 
-  distinct(spName, testStatus100mi)
+uniLAa <- finLHSElaA %>% 
+  distinct(spName, testStatus100mi, trophicCode)
+uniLAb <- finLHSElaB %>% 
+  distinct(spName, testStatus100mi, trophicCode)
+uniFLa <- LHSEflA %>% 
+  distinct(spName, testStatus100mi, trophicCode)
+uniFLb <- LHSEflB %>% 
+  distinct(spName, testStatus100mi, trophicCode)
 
 ### trying to get together stuff for visualization
 finLHSElaA$time <- "A"
@@ -514,3 +514,45 @@ tcFLsum <- rbind(LHSEflA, LHSEflB)
 
 ggplot(tcLAsum, aes(testStatus100mi, trophicCode, )) + geom_boxplot() +
   stat_compare_means(method = t.test)
+
+ggplot(uniLAa, aes(testStatus100mi, trophicCode)) + geom_boxplot() +
+  stat_compare_means(method = "wilcox.test")
+ggplot(uniLAb, aes(testStatus100mi, trophicCode)) + geom_boxplot() +
+  stat_compare_means(method = "wilcox.test")
+ggplot(uniFLa, aes(testStatus100mi, trophicCode)) + geom_boxplot() +
+  stat_compare_means(method = "wilcox.test")
+ggplot(uniFLb, aes(testStatus100mi, trophicCode)) + geom_boxplot() +
+  stat_compare_means(method = "wilcox.test")
+
+#summary for Lian
+explore_LA <- tcLAsum[!is.na(tcLAsum$racial_minority_percent_pop), ] %>% 
+  group_by(spName, testStatus100mi) %>% 
+  summarize(n = n(), aveWt = mean(WT_g), aveTC = mean(trophicCode), 
+            aveRM = mean(racial_minority_percent_pop), aveFB = mean(foreign_born_percent_pop),
+            aveFS = mean(food_stamp_percent_hhlds))
+
+ggplot(explore_LA, aes(testStatus100mi, aveWt))  + geom_boxplot()
+ggplot(explore_LA, aes(testStatus100mi, aveTC))  + geom_boxplot()
+ggplot(explore_LA, aes(testStatus100mi, aveRM))  + geom_boxplot()
+ggplot(explore_LA, aes(testStatus100mi, aveFB))  + geom_boxplot()
+ggplot(explore_LA, aes(testStatus100mi, aveFS))  + geom_boxplot()
+
+explore_FL <- tcFLsum[!is.na(tcFLsum$racial_minority_percent_pop), ] %>% 
+  group_by(spName, testStatus100mi) %>% 
+  summarize(n = n(), aveWt = mean(WT_kg), aveTC = mean(trophicCode), 
+            aveRM = mean(racial_minority_percent_pop), aveFB = mean(foreign_born_percent_pop),
+            aveFS = mean(food_stamp_percent_hhlds))
+
+ggplot(explore_FL, aes(testStatus100mi, aveWt))  + geom_boxplot()
+ggplot(explore_FL, aes(testStatus100mi, aveTC))  + geom_boxplot()
+ggplot(explore_FL, aes(testStatus100mi, aveRM))  + geom_boxplot()
+ggplot(explore_FL, aes(testStatus100mi, aveFB))  + geom_boxplot()
+ggplot(explore_FL, aes(testStatus100mi, aveFS))  + geom_boxplot()
+
+tcFLsum[!is.na(tcFLsum$racial_minority_percent_pop), ] %>% 
+  summarize(aveRM = mean(racial_minority_percent_pop), aveFB = mean(foreign_born_percent_pop),
+            aveFS = mean(food_stamp_percent_hhlds))
+
+tcLAsum[!is.na(tcLAsum$racial_minority_percent_pop), ] %>% 
+  summarize(aveRM = mean(racial_minority_percent_pop), aveFB = mean(foreign_born_percent_pop),
+            aveFS = mean(food_stamp_percent_hhlds))

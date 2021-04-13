@@ -780,9 +780,7 @@ ggplot(compLAa, aes(x=spName, y=aveWt_kg, fill = source))  +
         legend.title=element_text(size = 14, face = "bold")) + coord_flip()
 
 results.LAa <-ddply(compLAa,.(spName),function(x) summarize(x,
-Pvalue=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$p.value,
-Estimate.MERC=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[1],
-Estimate.MRIP=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[2]))
+Pvalue=wilcox.test(aveWt_kg~source,data=x,paired=F)$p.value), aveMerc = mean(aveWt_kg))
 results.LAa$adjP <- p.adjust(results.LAa$Pvalue, method = 'fdr', n = length(results.LAa$Pvalue))
 results.LAa$meanDiff <- (results.LAa$Estimate.MERC - results.LAa$Estimate.MRIP)
 results.LAa
@@ -931,6 +929,7 @@ BsubFLmerc <- BsubFLmerc[,c("ZIP", "Species", "Whole_weight","source")]
 colnames(BsubFLmerc) <- c("ZIP", "spName", "aveWt_g","source")
 
 compFLb <- rbind(BsubFLmrip,BsubFLmerc)
+str(compFLb)
 
 ggplot(compFLb, aes(x=spName, y=aveWt_g, fill = source))  + 
   geom_boxplot() + 
@@ -944,13 +943,19 @@ ggplot(compFLb, aes(x=spName, y=aveWt_g, fill = source))  +
         legend.title=element_text(size = 14, face = "bold"))
 
 #not enough observations
-results.FLb <-ddply(compFLb,.(spName),function(x) summarize(x,
-Pvalue=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$p.value,
-Estimate.MERC=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[1],
-Estimate.MRIP=t.test(aveWt_g~source,data=x,na.rm=TRUE,paired=F)$estimate[2]))
-results.FLb$adjP <- p.adjust(results.FLb$Pvalue, method = 'fdr', n = length(results.FLb$Pvalue))
-results.FLb$meanDiff <- (results.FLb$Estimate.MERC - results.FLb$Estimate.MRIP)
+library(plyr)
+detach(package:dplyr)
+res.FLb <-ddply(compFLb3,.(spName),function(x) summarize(x,
+Pvalue=wilcox.test(aveWt_kg~source,data=x,na.rm=TRUE,paired=F)$p.value,
+Estimate.MERC=wilcox.test(aveWt_kg~source,data=x,na.rm=TRUE,paired=F)$estimate[1],
+Estimate.MRIP=wilcox.test(aveWt_kg~source,data=x,na.rm=TRUE,paired=F)$estimate[2]))
+results.FLb$adjP <- p.adjust(res.FLb$Pvalue, method = 'fdr', n = length(results.FLb$Pvalue))
+results.FLb$meanDiff <- (res.FLb$Estimate.MERC - results.FLb$Estimate.MRIP)
 results.FLb
+
+compFLb3rd <- compFLb3[compFLb3$spName == "RED DRUM",]
+
+wilcox.test(aveWt_kg ~ source, data=compFLb3rd) 
 ```
 
 

@@ -181,6 +181,7 @@ ggplot(tcLAsum, aes(testStatus100mi, trophicCode, col = testStatus100mi)) +
                      name="Testing Status",
                      breaks=c("Not Tested", "Tested"))
 
+
 ggplot(tcFLsum, aes(testStatus100mi, trophicCode, col = testStatus100mi)) + 
   geom_boxplot() + 
   ylab("Trophic Level") +
@@ -190,6 +191,34 @@ ggplot(tcFLsum, aes(testStatus100mi, trophicCode, col = testStatus100mi)) +
   stat_compare_means(label.x.npc = .4, label.y.npc = 1, label = "p.signif",
                      symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), 
                                         symbols = c("****", "***", "**", "*", "ns"))) + 
+  scale_color_manual(values=c("#E69F00", "#56B4E9"), 
+                     name="Testing Status",
+                     breaks=c("Not Tested", "Tested"))
+
+## subset trophic levels
+
+ggplot(subset(tcLAsum,INTSITE %in% c("306a")), aes(testStatus100mi, trophicCode, col = testStatus100mi)) + 
+  geom_boxplot() + 
+  ylab("Trophic Level") +
+  scale_y_continuous(breaks = c(2, 2.5, 3, 3.5, 4, 4.5), limits = c(2, 4.6)) +
+  theme_light() + theme(axis.title.x = element_blank()) + 
+  facet_wrap(~ INTSITE) + 
+  stat_compare_means(label.x.npc = .4, label.y.npc = 1, label = "p.signif",
+                     symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), 
+                                        symbols = c("****", "***", "**", "*", "ns"))) +  
+  scale_color_manual(values=c("#E69F00", "#56B4E9"), 
+                     name="Testing Status",
+                     breaks=c("Not Tested", "Tested"))
+
+ggplot(subset(tcFLsum,INTSITE %in% c("769a")), aes(testStatus100mi, trophicCode, col = testStatus100mi)) + 
+  geom_boxplot() + 
+  ylab("Trophic Level") +
+  scale_y_continuous(breaks = c(2, 2.5, 3, 3.5, 4, 4.5), limits = c(2, 4.6)) +
+  theme_light() + theme(axis.title.x = element_blank()) + 
+  facet_wrap(~ INTSITE) + 
+  stat_compare_means(label.x.npc = .4, label.y.npc = 1, label = "p.signif",
+                     symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), 
+                                        symbols = c("****", "***", "**", "*", "ns"))) +  
   scale_color_manual(values=c("#E69F00", "#56B4E9"), 
                      name="Testing Status",
                      breaks=c("Not Tested", "Tested"))
@@ -371,3 +400,18 @@ step_modelLAB <- step(null_modelLAB, scope = list(lower = null_modelLAB, upper =
 
 # Estimate the stepwise donation probability
 step_prob <- step_modelLAB
+
+##########################
+#map visualizations
+
+plot(loc_NOLA,
+     col = "yellow",
+     main = "TOP MRIP sites, 2005 - 2009")
+plot(loc_LA,
+     add = TRUE)
+plot(loc_LAmripA,
+     pch = 4,
+     cex = 1,
+     col = "green",
+     add = TRUE)
+
